@@ -26,3 +26,8 @@
 *.exe
 *.out
 *.app
+
+# Miscellaneous
+out/
+*.s*-toks
+*.s*-workspace
