@@ -25,6 +25,9 @@
 #define NBT_BASE_HPP
 
 
+#include <iosfwd>
+
+
 namespace cpp_nbt {
 	class nbt_base {
 		protected:
@@ -37,6 +40,9 @@ namespace cpp_nbt {
 			nbt_base(nbt_base && other);
 
 			virtual ~nbt_base();
+
+			virtual std::istream & read(std::istream & from);
+			virtual std::ostream & write(std::ostream & to) const;
 	};
 }
 

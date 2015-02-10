@@ -21,9 +21,12 @@
 
 
 #include "nbt_base.hpp"
+#include <istream>
+#include <ostream>
 
 
 using namespace cpp_nbt;
+using namespace std;
 
 
 nbt_base::nbt_base() {}
@@ -32,3 +35,16 @@ nbt_base::nbt_base(const nbt_base & other) : id(other.id) {}
 nbt_base::nbt_base(nbt_base && other) : id(other.id) {}
 
 nbt_base::~nbt_base() {}
+
+
+istream & nbt_base::read(istream & from) {
+	id = from.get();
+
+	return from;
+}
+
+ostream & nbt_base::write(ostream & to) const {
+	to.put(id);
+
+	return to;
+}
