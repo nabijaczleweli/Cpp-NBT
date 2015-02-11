@@ -41,9 +41,23 @@ namespace cpp_nbt {
 
 			virtual ~nbt_base();
 
+			nbt_base & operator=(const nbt_base & from);
+			bool operator==(const nbt_base & to);
+
+			void swap(nbt_base & other);
+
 			virtual std::istream & read(std::istream & from);
 			virtual std::ostream & write(std::ostream & to) const;
 	};
+}
+
+
+namespace std {
+	using namespace cpp_nbt;
+
+	void swap(nbt_base & lhs, nbt_base & rhs) {
+		lhs.swap(rhs);
+	}
 }
 
 

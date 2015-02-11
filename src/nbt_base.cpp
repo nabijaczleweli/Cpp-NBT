@@ -36,6 +36,19 @@ nbt_base::nbt_base(nbt_base && other) : id(other.id) {}
 
 nbt_base::~nbt_base() {}
 
+nbt_base & nbt_base::operator=(const nbt_base & from) {
+	nbt_base temp(from);
+	swap(temp);
+	return *this;
+}
+
+bool nbt_base::operator==(const nbt_base & to) {
+	return id == to.id;
+}
+
+void nbt_base::swap(nbt_base & other) {
+	std::swap(id, other.id);
+}
 
 istream & nbt_base::read(istream & from) {
 	id = from.get();
