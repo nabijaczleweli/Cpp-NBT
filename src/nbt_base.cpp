@@ -50,14 +50,17 @@ void nbt_base::swap(nbt_base & other) {
 	std::swap(id, other.id);
 }
 
-istream & nbt_base::read(istream & from) {
+void nbt_base::read(istream & from) {
 	id = from.get();
-
-	return from;
 }
 
-ostream & nbt_base::write(ostream & to) const {
+void nbt_base::write(ostream & to) const {
 	to.put(id);
+}
 
-	return to;
+
+namespace std {
+	void swap(nbt_base & lhs, nbt_base & rhs) {
+		lhs.swap(rhs);
+	}
 }

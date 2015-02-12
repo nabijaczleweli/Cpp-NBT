@@ -46,18 +46,14 @@ namespace cpp_nbt {
 
 			void swap(nbt_base & other);
 
-			virtual std::istream & read(std::istream & from);
-			virtual std::ostream & write(std::ostream & to) const;
+			virtual void read(std::istream & from);
+			virtual void write(std::ostream & to) const;
 	};
 }
 
 
 namespace std {
-	using namespace cpp_nbt;
-
-	void swap(nbt_base & lhs, nbt_base & rhs) {
-		lhs.swap(rhs);
-	}
+	void swap(cpp_nbt::nbt_base & lhs, cpp_nbt::nbt_base & rhs);
 }
 
 
