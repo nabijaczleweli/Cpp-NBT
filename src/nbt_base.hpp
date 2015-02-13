@@ -48,6 +48,8 @@ namespace cpp_nbt {
 
 			virtual void read(std::istream & from);
 			virtual void write(std::ostream & to) const;
+
+			virtual nbt_base * clone() const = 0;
 	};
 }
 

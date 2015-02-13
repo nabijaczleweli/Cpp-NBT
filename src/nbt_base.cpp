@@ -37,8 +37,9 @@ nbt_base::nbt_base(nbt_base && other) : id(other.id) {}
 nbt_base::~nbt_base() {}
 
 nbt_base & nbt_base::operator=(const nbt_base & from) {
-	nbt_base temp(from);
-	swap(temp);
+	nbt_base * temp = from.clone();
+	swap(*temp);
+	delete temp; temp = nullptr;
 	return *this;
 }
 
