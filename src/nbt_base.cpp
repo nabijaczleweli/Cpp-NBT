@@ -30,9 +30,8 @@ using namespace std;
 
 
 nbt_base::nbt_base() {}
-nbt_base::nbt_base(unsigned char theid) : id(theid) {}
-nbt_base::nbt_base(const nbt_base & other) : id(other.id) {}
-nbt_base::nbt_base(nbt_base && other) : id(other.id) {}
+nbt_base::nbt_base(const nbt_base &) {}
+nbt_base::nbt_base(nbt_base &&) {}
 
 nbt_base::~nbt_base() {}
 
@@ -44,19 +43,7 @@ nbt_base & nbt_base::operator=(const nbt_base & from) {
 }
 
 bool nbt_base::operator==(const nbt_base & to) {
-	return id == to.id;
-}
-
-void nbt_base::swap(nbt_base & other) {
-	std::swap(id, other.id);
-}
-
-void nbt_base::read(istream & from) {
-	id = from.get();
-}
-
-void nbt_base::write(ostream & to) const {
-	to.put(id);
+	return id() == to.id();
 }
 
 

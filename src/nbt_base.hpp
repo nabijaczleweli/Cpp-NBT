@@ -30,12 +30,8 @@
 
 namespace cpp_nbt {
 	class nbt_base {
-		protected:
-			unsigned char id = 0;
-
 		public:
 			nbt_base();
-			nbt_base(unsigned char theid);
 			nbt_base(const nbt_base & other);
 			nbt_base(nbt_base && other);
 
@@ -44,10 +40,12 @@ namespace cpp_nbt {
 			nbt_base & operator=(const nbt_base & from);
 			bool operator==(const nbt_base & to);
 
-			void swap(nbt_base & other);
+			virtual void swap(nbt_base & with) = 0;
 
-			virtual void read(std::istream & from);
-			virtual void write(std::ostream & to) const;
+			virtual void read(std::istream & from) = 0;
+			virtual void write(std::ostream & to) const = 0;
+
+			virtual unsigned char id() const = 0;
 
 			virtual nbt_base * clone() const = 0;
 	};
