@@ -28,7 +28,7 @@ all : dll
 clean :
 	rm -rf $(BUILD) $(TEST)/*$(EXE)
 
-dll : $(BUILD)/nbt_base$(OBJ)
+dll : $(BUILD)/nbt_base$(OBJ) $(BUILD)/nbt_registry$(OBJ)
 	$(CPP) $(CPPAR) -shared -fpic -o$(BUILD)/cpp-nbt$(DLL) $^
 
 
