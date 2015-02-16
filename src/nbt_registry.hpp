@@ -25,18 +25,18 @@
 #define NBT_REGISTRY_HPP
 
 
-#include "nbt_base.hpp"
+#include "tags/nbt_base.hpp"
 #include <unordered_map>
 #include <functional>
+
 
 namespace cpp_nbt {
 	class nbt_registry {
 		private:
-			static std::unordered_map<unsigned char, std::function<nbt_base *()>> id_to_pointer_map;
+			static std::unordered_map<unsigned char, std::function<nbt_base *()>> id_to_pointer_map;  // Comes preloaded with all default types
 
 		public:
 			static void register_id(unsigned char id, const std::function<nbt_base *()> & func);
-			static void register_id(const nbt_base & from);  // For stateless tag types
 
 			static nbt_base * create(unsigned char id);
 	};

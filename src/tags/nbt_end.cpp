@@ -20,36 +20,32 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_registry.hpp"
-#include "tags/nbt_end.hpp"
-#include "tags/nbt_byte.hpp"
+#include "nbt_end.hpp"
+#include <functional>
 
 
-using namespace cpp_nbt;
 using namespace std;
+using namespace cpp_nbt;
 
 
-template<class T>
-struct default_creator {
-	constexpr nbt_base * operator()() const {
-		return new T;
-	}
-};
+const unsigned char nbt_end::nbt_end_id = 0;
 
 
-unordered_map<unsigned char, function<nbt_base *()>> nbt_registry::id_to_pointer_map({
-	{nbt_end::nbt_end_id, default_creator<nbt_end>()},
-	{nbt_byte::nbt_byte_id, default_creator<nbt_byte>()}
-});
+nbt_end::nbt_end() : nbt_base() {}
+nbt_end::nbt_end(const nbt_end & other) : nbt_base(other) {}
+nbt_end::nbt_end(nbt_end && other) : nbt_base(move(other)) {}
 
+nbt_end::~nbt_end() {}
 
-void nbt_registry::register_id(unsigned char id, const function<nbt_base *()> & func) {
-	id_to_pointer_map.emplace(id, func);
+void nbt_end::swap(nbt_base &) {}
+
+void nbt_end::read(std::istream &) {}
+void nbt_end::write(std::ostream &) const {}
+
+unsigned char nbt_end::id() const {
+	return nbt_end_id;
 }
 
-nbt_base * nbt_registry::create(unsigned char id) {
-	const auto itr = id_to_pointer_map.find(id);
-	if(itr == id_to_pointer_map.end())
-		return nullptr;
-	return itr->second();
+nbt_base * nbt_end::clone() const {
+	return new nbt_end(*this);
 }

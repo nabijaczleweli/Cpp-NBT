@@ -21,6 +21,8 @@
 
 include configMakefile
 
+SOURCES = tags/nbt_base nbt_registry tags/nbt_end tags/nbt_byte
+
 .PHONY : clean all dll
 
 all : dll
@@ -28,12 +30,12 @@ all : dll
 clean :
 	rm -rf $(BUILD) $(TEST)/*$(EXE)
 
-dll : $(BUILD)/nbt_base$(OBJ) $(BUILD)/nbt_registry$(OBJ)
+dll : $(foreach src,$(SOURCES),$(BUILD)/$(src)$(OBJ))
 	$(CPP) $(CPPAR) -shared -fpic -o$(BUILD)/cpp-nbt$(DLL) $^
 
 
 $(BUILD)/%$(OBJ) : src/%.cpp
-	@mkdir $(dir $@) 2>$(nul) | $(nop)
+	@mkdir -p $(dir $@) 2>$(nul) | $(nop)
 	$(CPP) $(CPPAR) -c -o$@ $^
 
 %$(EXE) : %.cpp
