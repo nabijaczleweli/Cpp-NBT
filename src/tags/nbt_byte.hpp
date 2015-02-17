@@ -31,14 +31,14 @@
 namespace cpp_nbt {
 	class nbt_byte : public nbt_base {
 		private:
-			char value;
+			char payload;
 
 		public:
 			static const unsigned char nbt_byte_id;
 
 
 			nbt_byte();
-			nbt_byte(char thevalue);
+			nbt_byte(char value);
 			nbt_byte(const nbt_byte & other);
 			nbt_byte(nbt_byte && other);
 
@@ -54,6 +54,9 @@ namespace cpp_nbt {
 			virtual unsigned char id() const;
 
 			virtual nbt_base * clone() const;
+
+			const char & value() const;
+			char & value();
 	};
 }
 

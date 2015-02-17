@@ -21,7 +21,7 @@
 
 include configMakefile
 
-SOURCES = tags/nbt_base nbt_registry tags/nbt_end tags/nbt_byte
+SOURCES = nbt_registry tags/nbt_base tags/nbt_end tags/nbt_byte tags/nbt_short tags/nbt_int
 
 .PHONY : clean all dll
 

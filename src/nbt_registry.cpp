@@ -23,10 +23,15 @@
 #include "nbt_registry.hpp"
 #include "tags/nbt_end.hpp"
 #include "tags/nbt_byte.hpp"
+#include "tags/nbt_short.hpp"
+#include "tags/nbt_int.hpp"
 
 
 using namespace cpp_nbt;
 using namespace std;
+
+
+typedef nbt_registry::creator_t creator_t;
 
 
 template<class T>
@@ -37,19 +42,29 @@ struct default_creator {
 };
 
 
-unordered_map<unsigned char, function<nbt_base *()>> nbt_registry::id_to_pointer_map({
+unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
 	{nbt_end::nbt_end_id, default_creator<nbt_end>()},
-	{nbt_byte::nbt_byte_id, default_creator<nbt_byte>()}
+	{nbt_byte::nbt_byte_id, default_creator<nbt_byte>()},
+	{nbt_short::nbt_short_id, default_creator<nbt_short>()},
+	{nbt_int::nbt_int_id, default_creator<nbt_int>()}
 });
 
 
-void nbt_registry::register_id(unsigned char id, const function<nbt_base *()> & func) {
+void nbt_registry::register_id(unsigned char id, const creator_t & func) {
 	id_to_pointer_map.emplace(id, func);
 }
 
 nbt_base * nbt_registry::create(unsigned char id) {
+	return creator(id)();
+}
+
+const creator_t & nbt_registry::creator(unsigned char id) {
+	static const creator_t placeholder_creator([&]() {
+		return nullptr;
+	});
+
 	const auto itr = id_to_pointer_map.find(id);
 	if(itr == id_to_pointer_map.end())
-		return nullptr;
-	return itr->second();
+		return placeholder_creator;
+	return itr->second;
 }

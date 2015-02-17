@@ -32,13 +32,17 @@
 
 namespace cpp_nbt {
 	class nbt_registry {
+		public:
+			typedef const std::function<nbt_base *()> creator_t;
+
 		private:
-			static std::unordered_map<unsigned char, std::function<nbt_base *()>> id_to_pointer_map;  // Comes preloaded with all default types
+			static std::unordered_map<unsigned char, creator_t> id_to_pointer_map;  // Comes preloaded with all default types
 
 		public:
-			static void register_id(unsigned char id, const std::function<nbt_base *()> & func);
+			static void register_id(unsigned char id, const creator_t & func);
 
 			static nbt_base * create(unsigned char id);
+			static const creator_t & creator(unsigned char id);
 	};
 }
 

@@ -20,59 +20,44 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_byte.hpp"
-#include <istream>
-#include <ostream>
+#pragma once
+#ifndef NBT_SHORT_HPP
+#define NBT_SHORT_HPP
 
 
-using namespace std;
-using namespace cpp_nbt;
+#include "nbt_base.hpp"
 
 
-const unsigned char nbt_byte::nbt_byte_id = 1;
+namespace cpp_nbt {
+	class nbt_short : public nbt_base {
+		private:
+			short int payload;
 
+		public:
+			static const unsigned char nbt_short_id;
 
-nbt_byte::nbt_byte() : nbt_base(), payload(0) {}
-nbt_byte::nbt_byte(char value) : nbt_base(), payload(value) {}
-nbt_byte::nbt_byte(const nbt_byte & other) : nbt_base(other), payload(other.payload) {}
-nbt_byte::nbt_byte(nbt_byte && other) : nbt_base(move(other)), payload(other.payload) {}
+			nbt_short();
+			nbt_short(short int value);
+			nbt_short(const nbt_short & other);
+			nbt_short(nbt_short && other);
 
-nbt_byte::~nbt_byte() {}
+			virtual ~nbt_short();
 
-void nbt_byte::swap(nbt_base & with) {
-	swap(dynamic_cast<nbt_byte &>(with));
+			virtual void swap(nbt_base & with);
+			virtual void swap(nbt_short & with);
+			nbt_short & operator=(const nbt_short & from);
+
+			virtual void read(std::istream & from);
+			virtual void write(std::ostream & to) const;
+
+			virtual unsigned char id() const;
+
+			virtual nbt_base * clone() const;
+
+			const short int & value() const;
+			short int & value();
+	};
 }
 
-void nbt_byte::swap(nbt_byte & with) {
-	std::swap(payload, with.payload);
-}
 
-nbt_byte & nbt_byte::operator=(const nbt_byte & from) {
-	nbt_byte temp(from);
-	swap(temp);
-	return *this;
-}
-
-void nbt_byte::read(istream & from) {
-	payload = from.get();
-}
-
-void nbt_byte::write(ostream & to) const {
-	to.put(payload);
-}
-
-unsigned char nbt_byte::id() const {
-	return nbt_byte_id;
-}
-
-nbt_base * nbt_byte::clone() const {
-	return new nbt_byte(*this);
-}
-
-const char & nbt_byte::value() const {
-	return payload;
-}
-
-char & nbt_byte::value() {
-	return payload;
-}
+#endif  // NBT_SHORT_HPP
