@@ -53,6 +53,14 @@ nbt_int & nbt_int::operator=(const nbt_int & from) {
 	return *this;
 }
 
+bool nbt_int::operator==(const nbt_base & to) {
+	return operator==(dynamic_cast<const nbt_int &>(to));
+}
+
+bool nbt_int::operator==(const nbt_int & to) {
+	return nbt_base::operator==(to) && payload == to.payload;
+}
+
 void nbt_int::read(istream & from) {
 	from.get(static_cast<char *>(static_cast<void *>(&payload)), sizeof(payload));
 }

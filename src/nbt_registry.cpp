@@ -25,6 +25,9 @@
 #include "tags/nbt_byte.hpp"
 #include "tags/nbt_short.hpp"
 #include "tags/nbt_int.hpp"
+#include "tags/nbt_long.hpp"
+#include "tags/nbt_float.hpp"
+#include "tags/nbt_double.hpp"
 
 
 using namespace cpp_nbt;
@@ -46,7 +49,10 @@ unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
 	{nbt_end::nbt_end_id, default_creator<nbt_end>()},
 	{nbt_byte::nbt_byte_id, default_creator<nbt_byte>()},
 	{nbt_short::nbt_short_id, default_creator<nbt_short>()},
-	{nbt_int::nbt_int_id, default_creator<nbt_int>()}
+	{nbt_int::nbt_int_id, default_creator<nbt_int>()},
+	{nbt_long::nbt_long_id, default_creator<nbt_long>()},
+	{nbt_float::nbt_float_id, default_creator<nbt_float>()},
+	{nbt_double::nbt_double_id, default_creator<nbt_double>()}
 });
 
 

@@ -43,16 +43,19 @@ namespace cpp_nbt {
 
 			virtual ~nbt_int();
 
-			virtual void swap(nbt_base & with);
+			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_int & with);
+
 			nbt_int & operator=(const nbt_int & from);
+			virtual bool operator==(const nbt_base & to) override;
+			virtual bool operator==(const nbt_int & to);
 
-			virtual void read(std::istream & from);
-			virtual void write(std::ostream & to) const;
+			virtual void read(std::istream & from) override;
+			virtual void write(std::ostream & to) const override;
 
-			virtual unsigned char id() const;
+			virtual unsigned char id() const override;
 
-			virtual nbt_base * clone() const;
+			virtual nbt_base * clone() const override;
 
 			const int & value() const;
 			int & value();

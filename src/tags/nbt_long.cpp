@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_short.hpp"
+#include "nbt_long.hpp"
 #include <istream>
 #include <ostream>
 
@@ -29,58 +29,58 @@ using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_short::nbt_short_id = 2;
+const unsigned char nbt_long::nbt_long_id = 4;
 
 
-nbt_short::nbt_short() : nbt_base(), payload(0) {}
-nbt_short::nbt_short(short int value) : nbt_base(), payload(value) {}
-nbt_short::nbt_short(const nbt_short & other) : nbt_base(other), payload(other.payload) {}
-nbt_short::nbt_short(nbt_short && other) : nbt_base(move(other)), payload(other.payload) {}
+nbt_long::nbt_long() : nbt_base(), payload(0) {}
+nbt_long::nbt_long(long int value) : nbt_base(), payload(value) {}
+nbt_long::nbt_long(const nbt_long & other) : nbt_base(other), payload(other.payload) {}
+nbt_long::nbt_long(nbt_long && other) : nbt_base(move(other)), payload(other.payload) {}
 
-nbt_short::~nbt_short() {}
+nbt_long::~nbt_long() {}
 
-void nbt_short::swap(nbt_base & with) {
-	swap(dynamic_cast<nbt_short &>(with));
+void nbt_long::swap(nbt_base & with) {
+	swap(dynamic_cast<nbt_long &>(with));
 }
 
-void nbt_short::swap(nbt_short & with) {
+void nbt_long::swap(nbt_long & with) {
 	std::swap(payload, with.payload);
 }
 
-nbt_short & nbt_short::operator=(const nbt_short & from) {
-	nbt_short temp(from);
+nbt_long & nbt_long::operator=(const nbt_long & from) {
+	nbt_long temp(from);
 	swap(temp);
 	return *this;
 }
 
-bool nbt_short::operator==(const nbt_base & to) {
-	return operator==(dynamic_cast<const nbt_short &>(to));
+bool nbt_long::operator==(const nbt_base & to) {
+	return operator==(dynamic_cast<const nbt_long &>(to));
 }
 
-bool nbt_short::operator==(const nbt_short & to) {
+bool nbt_long::operator==(const nbt_long & to) {
 	return nbt_base::operator==(to) && payload == to.payload;
 }
 
-void nbt_short::read(istream & from) {
+void nbt_long::read(istream & from) {
 	from.get(static_cast<char *>(static_cast<void *>(&payload)), sizeof(payload));
 }
 
-void nbt_short::write(ostream & to) const {
+void nbt_long::write(ostream & to) const {
 	to.write(static_cast<const char *>(static_cast<const void *>(&payload)), sizeof(payload));
 }
 
-unsigned char nbt_short::id() const {
-	return nbt_short_id;
+unsigned char nbt_long::id() const {
+	return nbt_long_id;
 }
 
-nbt_base * nbt_short::clone() const {
-	return new nbt_short(*this);
+nbt_base * nbt_long::clone() const {
+	return new nbt_long(*this);
 }
 
-const short int & nbt_short::value() const {
+const long int & nbt_long::value() const {
 	return payload;
 }
 
-short int & nbt_short::value() {
+long int & nbt_long::value() {
 	return payload;
 }

@@ -21,34 +21,34 @@
 
 
 #pragma once
-#ifndef NBT_SHORT_HPP
-#define NBT_SHORT_HPP
+#ifndef NBT_DOUBLE_HPP
+#define NBT_DOUBLE_HPP
 
 
 #include "nbt_base.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_short : public nbt_base {
+	class nbt_double : public nbt_base {
 		private:
-			short int payload;
+			double payload;
 
 		public:
-			static const unsigned char nbt_short_id;
+			static const unsigned char nbt_double_id;
 
-			nbt_short();
-			nbt_short(short int value);
-			nbt_short(const nbt_short & other);
-			nbt_short(nbt_short && other);
+			nbt_double();
+			nbt_double(double value);
+			nbt_double(const nbt_double & other);
+			nbt_double(nbt_double && other);
 
-			virtual ~nbt_short();
+			virtual ~nbt_double();
 
 			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_short & with);
+			virtual void swap(nbt_double & with);
 
-			nbt_short & operator=(const nbt_short & from);
+			nbt_double & operator=(const nbt_double & from);
 			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_short & to);
+			virtual bool operator==(const nbt_double & to);
 
 			virtual void read(std::istream & from) override;
 			virtual void write(std::ostream & to) const override;
@@ -57,10 +57,10 @@ namespace cpp_nbt {
 
 			virtual nbt_base * clone() const override;
 
-			const short int & value() const;
-			short int & value();
+			const double & value() const;
+			double & value();
 	};
 }
 
 
-#endif  // NBT_SHORT_HPP
+#endif  // NBT_DOUBLE_HPP

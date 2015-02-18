@@ -37,10 +37,10 @@ namespace cpp_nbt {
 
 			virtual ~nbt_base();
 
-			nbt_base & operator=(const nbt_base & from);
-			bool operator==(const nbt_base & to);
-
 			virtual void swap(nbt_base & with) = 0;
+
+			nbt_base & operator=(const nbt_base & from);
+			virtual bool operator==(const nbt_base & to);
 
 			virtual void read(std::istream & from) = 0;
 			virtual void write(std::ostream & to) const = 0;

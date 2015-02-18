@@ -40,14 +40,14 @@ namespace cpp_nbt {
 
 			virtual ~nbt_end();
 
-			virtual void swap(nbt_base & with);
+			virtual void swap(nbt_base & with) override;
 
-			virtual void read(std::istream & from);
-			virtual void write(std::ostream & to) const;
+			virtual void read(std::istream & from) override;
+			virtual void write(std::ostream & to) const override;
 
-			virtual unsigned char id() const;
+			virtual unsigned char id() const override;
 
-			virtual nbt_base * clone() const;
+			virtual nbt_base * clone() const override;
 	};
 }
 
