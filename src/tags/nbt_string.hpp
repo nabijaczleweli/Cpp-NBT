@@ -21,31 +21,47 @@
 
 
 #pragma once
-#ifndef NBT_REGISTRY_HPP
-#define NBT_REGISTRY_HPP
+#ifndef NBT_STRING_HPP
+#define NBT_STRING_HPP
 
 
-#include "tags/nbt_base.hpp"
-#include <experimental/optional>
-#include <unordered_map>
-#include <functional>
+#include "nbt_base.hpp"
+#include <string>
 
 
 namespace cpp_nbt {
-	class nbt_registry {
-		public:
-			typedef const std::function<nbt_base *()> creator_t;
-
+	class nbt_string : public nbt_base {
 		private:
-			static std::unordered_map<unsigned char, creator_t> id_to_pointer_map;  // Comes preloaded with all default types
+			std::string payload;
 
 		public:
-			static void register_id(unsigned char id, const creator_t & func);
+			static const unsigned char nbt_string_id;
 
-			static nbt_base * create(unsigned char id);
-			static std::experimental::optional<std::reference_wrapper<const creator_t>> creator(unsigned char id);
+			nbt_string();
+			nbt_string(const std::string & str);
+			nbt_string(const nbt_string & other);
+			nbt_string(nbt_string && other);
+
+			virtual ~nbt_string();
+
+			virtual void swap(nbt_base & with) override;
+			virtual void swap(nbt_string & with);
+
+			nbt_string & operator=(const nbt_string & from);
+			virtual bool operator==(const nbt_base & to) override;
+			virtual bool operator==(const nbt_string & to);
+
+			virtual void read(std::istream & from) override;
+			virtual void write(std::ostream & to) const override;
+
+			virtual unsigned char id() const override;
+
+			virtual nbt_base * clone() const override;
+
+			const std::string & value() const;
+			std::string & value();
 	};
 }
 
 
-#endif  // NBT_REGISTRY_HPP
+#endif  // NBT_STRING_HPP

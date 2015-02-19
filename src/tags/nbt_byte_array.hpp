@@ -21,31 +21,48 @@
 
 
 #pragma once
-#ifndef NBT_REGISTRY_HPP
-#define NBT_REGISTRY_HPP
+#ifndef NBT_BYTE_ARRAY_HPP
+#define NBT_BYTE_ARRAY_HPP
 
 
-#include "tags/nbt_base.hpp"
-#include <experimental/optional>
-#include <unordered_map>
-#include <functional>
+#include "nbt_base.hpp"
+#include <vector>
 
 
 namespace cpp_nbt {
-	class nbt_registry {
-		public:
-			typedef const std::function<nbt_base *()> creator_t;
-
+	class nbt_byte_array : public nbt_base {
 		private:
-			static std::unordered_map<unsigned char, creator_t> id_to_pointer_map;  // Comes preloaded with all default types
+			std::vector<char> payload;
 
 		public:
-			static void register_id(unsigned char id, const creator_t & func);
+			static const unsigned char nbt_byte_array_id;
 
-			static nbt_base * create(unsigned char id);
-			static std::experimental::optional<std::reference_wrapper<const creator_t>> creator(unsigned char id);
+
+			nbt_byte_array();
+			nbt_byte_array(const std::vector<char> value);
+			nbt_byte_array(const nbt_byte_array & other);
+			nbt_byte_array(nbt_byte_array && other);
+
+			virtual ~nbt_byte_array();
+
+			virtual void swap(nbt_base & with) override;
+			virtual void swap(nbt_byte_array & with);
+
+			nbt_byte_array & operator=(const nbt_byte_array & from);
+			virtual bool operator==(const nbt_base & to) override;
+			virtual bool operator==(const nbt_byte_array & to);
+
+			virtual void read(std::istream & from) override;
+			virtual void write(std::ostream & to) const override;
+
+			virtual unsigned char id() const override;
+
+			virtual nbt_base * clone() const override;
+
+			const std::vector<char> & value() const;
+			std::vector<char> & value();
 	};
 }
 
 
-#endif  // NBT_REGISTRY_HPP
+#endif  // NBT_BYTE_ARRAY_HPP
