@@ -21,7 +21,7 @@
 
 include configMakefile
 
-TAGS = nbt_base nbt_end nbt_byte nbt_short nbt_int nbt_long nbt_float nbt_double nbt_byte_array nbt_string
+TAGS = nbt_base nbt_end nbt_byte nbt_short nbt_int nbt_long nbt_float nbt_double nbt_byte_array nbt_string nbt_list nbt_int_array
 SOURCES = nbt_registry $(foreach tag,$(TAGS),tags/$(tag))
 
 .PHONY : clean all dll
@@ -36,7 +36,7 @@ dll : $(foreach src,$(SOURCES),$(BUILD)/$(src)$(OBJ))
 
 
 $(BUILD)/%$(OBJ) : src/%.cpp
-	@mkdir -p $(dir $@) 2>$(nul) | $(nop)
+	@mkdir -p $(dir $@) 1>$(nul) 2>$(nul)
 	$(CPP) $(CPPAR) -c -o$@ $^
 
 %$(EXE) : %.cpp

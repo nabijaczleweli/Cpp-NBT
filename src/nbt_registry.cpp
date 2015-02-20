@@ -30,6 +30,8 @@
 #include "tags/nbt_double.hpp"
 #include "tags/nbt_byte_array.hpp"
 #include "tags/nbt_string.hpp"
+#include "tags/nbt_list.hpp"
+#include "tags/nbt_int_array.hpp"
 
 
 using namespace std;
@@ -59,7 +61,9 @@ unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
 	{nbt_float::nbt_float_id, default_creator<nbt_float>()},
 	{nbt_double::nbt_double_id, default_creator<nbt_double>()},
 	{nbt_byte_array::nbt_byte_array_id, default_creator<nbt_byte_array>()},
-	{nbt_string::nbt_string_id, default_creator<nbt_string>()}
+	{nbt_string::nbt_string_id, default_creator<nbt_string>()},
+	{nbt_list::nbt_list_id, default_creator<nbt_list>()},
+	{nbt_int_array::nbt_int_array_id, default_creator<nbt_int_array>()}
 });
 
 
