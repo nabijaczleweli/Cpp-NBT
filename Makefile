@@ -21,8 +21,8 @@
 
 include configMakefile
 
-TAGS = nbt_base nbt_end nbt_byte nbt_short nbt_int nbt_long nbt_float nbt_double nbt_byte_array nbt_string nbt_list nbt_int_array
-SOURCES = nbt_registry $(foreach tag,$(TAGS),tags/$(tag))
+TAGS = nbt_base nbt_end nbt_byte nbt_short nbt_int nbt_long nbt_float nbt_double nbt_byte_array nbt_string nbt_list nbt_compound nbt_int_array
+SOURCES = nbt_registry nbt_manager $(foreach tag,$(TAGS),tags/$(tag))
 
 .PHONY : clean all dll
 

@@ -31,6 +31,7 @@
 #include "tags/nbt_byte_array.hpp"
 #include "tags/nbt_string.hpp"
 #include "tags/nbt_list.hpp"
+#include "tags/nbt_compound.hpp"
 #include "tags/nbt_int_array.hpp"
 
 
@@ -63,6 +64,7 @@ unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
 	{nbt_byte_array::nbt_byte_array_id, default_creator<nbt_byte_array>()},
 	{nbt_string::nbt_string_id, default_creator<nbt_string>()},
 	{nbt_list::nbt_list_id, default_creator<nbt_list>()},
+	{nbt_compound::nbt_compound_id, default_creator<nbt_compound>()},
 	{nbt_int_array::nbt_int_array_id, default_creator<nbt_int_array>()}
 });
 
