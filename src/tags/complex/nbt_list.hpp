@@ -21,34 +21,40 @@
 
 
 #pragma once
-#ifndef NBT_INT_HPP
-#define NBT_INT_HPP
+#ifndef NBT_LIST_HPP
+#define NBT_LIST_HPP
 
 
-#include "nbt_base.hpp"
+#include "../nbt_base.hpp"
+#include <experimental/optional>
+#include <vector>
 
 
 namespace cpp_nbt {
-	class nbt_int : public nbt_base {
+	class nbt_list : public nbt_base {
 		private:
-			int payload;
+			unsigned char tag_type;
+			std::vector<nbt_base *> tags;
+
+			bool try_tag_type(const nbt_base & tag);
+			void remake_tags();
 
 		public:
-			static const unsigned char nbt_int_id;
+			static const unsigned char nbt_list_id;
 
-			nbt_int();
-			nbt_int(int value);
-			nbt_int(const nbt_int & other);
-			nbt_int(nbt_int && other);
+			nbt_list();
+			nbt_list(const std::vector<nbt_base *> & thetags);
+			nbt_list(const nbt_list & other);
+			nbt_list(nbt_list && other);
 
-			virtual ~nbt_int();
+			virtual ~nbt_list();
 
 			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_int & with);
+			virtual void swap(nbt_list & with);
 
-			nbt_int & operator=(const nbt_int & from);
+			nbt_list & operator=(const nbt_list & from);
 			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_int & to);
+			virtual bool operator==(const nbt_list & to);
 
 			virtual void read(std::istream & from) override;
 			virtual void write(std::ostream & to) const override;
@@ -57,10 +63,14 @@ namespace cpp_nbt {
 
 			virtual nbt_base * clone() const override;
 
-			const int & value() const;
-			int & value();
+			bool append_tag(const nbt_base & tag);
+			bool set_tag(unsigned int idx, const nbt_base & tag);
+			void remove_tag(unsigned int idx);
+			size_t count() const;
+			std::experimental::optional<std::reference_wrapper<const nbt_base>> get(unsigned int idx) const;
+			std::experimental::optional<std::reference_wrapper<nbt_base>> get(unsigned int idx);
 	};
 }
 
 
-#endif  // NBT_INT_HPP
+#endif  // NBT_LIST_HPP

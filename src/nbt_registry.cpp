@@ -22,17 +22,17 @@
 
 #include "nbt_registry.hpp"
 #include "tags/nbt_end.hpp"
-#include "tags/nbt_byte.hpp"
-#include "tags/nbt_short.hpp"
-#include "tags/nbt_int.hpp"
-#include "tags/nbt_long.hpp"
-#include "tags/nbt_float.hpp"
-#include "tags/nbt_double.hpp"
-#include "tags/nbt_byte_array.hpp"
+#include "tags/primitive/nbt_byte.hpp"
+#include "tags/primitive/nbt_short.hpp"
+#include "tags/primitive/nbt_int.hpp"
+#include "tags/primitive/nbt_long.hpp"
+#include "tags/primitive/nbt_float.hpp"
+#include "tags/primitive/nbt_double.hpp"
+#include "tags/array/nbt_byte_array.hpp"
 #include "tags/nbt_string.hpp"
-#include "tags/nbt_list.hpp"
-#include "tags/nbt_compound.hpp"
-#include "tags/nbt_int_array.hpp"
+#include "tags/complex/nbt_list.hpp"
+#include "tags/complex/nbt_compound.hpp"
+#include "tags/array/nbt_int_array.hpp"
 
 
 using namespace std;

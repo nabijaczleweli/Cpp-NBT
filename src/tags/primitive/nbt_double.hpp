@@ -25,7 +25,7 @@
 #define NBT_DOUBLE_HPP
 
 
-#include "nbt_base.hpp"
+#include "../nbt_base.hpp"
 
 
 namespace cpp_nbt {

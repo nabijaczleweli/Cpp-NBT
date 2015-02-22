@@ -25,7 +25,7 @@
 #define NBT_COMPOUND_HPP
 
 
-#include "nbt_base.hpp"
+#include "../nbt_base.hpp"
 #include <experimental/optional>
 #include <unordered_map>
 #include <vector>

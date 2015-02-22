@@ -21,7 +21,7 @@
 
 
 #include "nbt_list.hpp"
-#include "../nbt_registry.hpp"
+#include "../../nbt_registry.hpp"
 #include <istream>
 #include <ostream>
 

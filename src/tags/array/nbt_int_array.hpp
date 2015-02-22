@@ -21,34 +21,36 @@
 
 
 #pragma once
-#ifndef NBT_LONG_HPP
-#define NBT_LONG_HPP
+#ifndef NBT_INT_ARRAY_HPP
+#define NBT_INT_ARRAY_HPP
 
 
-#include "nbt_base.hpp"
+#include "../nbt_base.hpp"
+#include <vector>
 
 
 namespace cpp_nbt {
-	class nbt_long : public nbt_base {
+	class nbt_int_array : public nbt_base {
 		private:
-			long int payload;
+			std::vector<int> payload;
 
 		public:
-			static const unsigned char nbt_long_id;
+			static const unsigned char nbt_int_array_id;
 
-			nbt_long();
-			nbt_long(long int value);
-			nbt_long(const nbt_long & other);
-			nbt_long(nbt_long && other);
 
-			virtual ~nbt_long();
+			nbt_int_array();
+			nbt_int_array(const std::vector<int> value);
+			nbt_int_array(const nbt_int_array & other);
+			nbt_int_array(nbt_int_array && other);
+
+			virtual ~nbt_int_array();
 
 			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_long & with);
+			virtual void swap(nbt_int_array & with);
 
-			nbt_long & operator=(const nbt_long & from);
+			nbt_int_array & operator=(const nbt_int_array & from);
 			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_long & to);
+			virtual bool operator==(const nbt_int_array & to);
 
 			virtual void read(std::istream & from) override;
 			virtual void write(std::ostream & to) const override;
@@ -57,10 +59,10 @@ namespace cpp_nbt {
 
 			virtual nbt_base * clone() const override;
 
-			const long int & value() const;
-			long int & value();
+			const std::vector<int> & value() const;
+			std::vector<int> & value();
 	};
 }
 
 
-#endif  // NBT_LONG_HPP
+#endif  // NBT_INT_ARRAY_HPP
