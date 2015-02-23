@@ -25,41 +25,12 @@
 #define NBT_DOUBLE_HPP
 
 
+#include "primitive_nbt_decl.hpp"
 #include "../nbt_base.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_double : public nbt_base {
-		private:
-			double payload;
-
-		public:
-			static const unsigned char nbt_double_id;
-
-			nbt_double();
-			nbt_double(double value);
-			nbt_double(const nbt_double & other);
-			nbt_double(nbt_double && other);
-
-			virtual ~nbt_double();
-
-			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_double & with);
-
-			nbt_double & operator=(const nbt_double & from);
-			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_double & to);
-
-			virtual void read(std::istream & from) override;
-			virtual void write(std::ostream & to) const override;
-
-			virtual unsigned char id() const override;
-
-			virtual nbt_base * clone() const override;
-
-			const double & value() const;
-			double & value();
-	};
+	NBT_CPP_NBT_PRIMITIVE_DECLARATION(double, double);
 }
 
 

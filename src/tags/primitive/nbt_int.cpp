@@ -20,67 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+#include "primitive_nbt_def.hpp"
 #include "nbt_int.hpp"
 #include <istream>
 #include <ostream>
 
 
-using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_int::nbt_int_id = 3;
-
-
-nbt_int::nbt_int() : nbt_base(), payload(0) {}
-nbt_int::nbt_int(int value) : nbt_base(), payload(value) {}
-nbt_int::nbt_int(const nbt_int & other) : nbt_base(other), payload(other.payload) {}
-nbt_int::nbt_int(nbt_int && other) : nbt_base(move(other)), payload(other.payload) {}
-
-nbt_int::~nbt_int() {}
-
-void nbt_int::swap(nbt_base & with) {
-	swap(dynamic_cast<nbt_int &>(with));
-}
-
-void nbt_int::swap(nbt_int & with) {
-	std::swap(payload, with.payload);
-}
-
-nbt_int & nbt_int::operator=(const nbt_int & from) {
-	nbt_int temp(from);
-	swap(temp);
-	return *this;
-}
-
-bool nbt_int::operator==(const nbt_base & to) {
-	return operator==(dynamic_cast<const nbt_int &>(to));
-}
-
-bool nbt_int::operator==(const nbt_int & to) {
-	return nbt_base::operator==(to) && payload == to.payload;
-}
-
-void nbt_int::read(istream & from) {
-	from.get(static_cast<char *>(static_cast<void *>(&payload)), sizeof(payload));
-}
-
-void nbt_int::write(ostream & to) const {
-	to.write(static_cast<const char *>(static_cast<const void *>(&payload)), sizeof(payload));
-}
-
-unsigned char nbt_int::id() const {
-	return nbt_int_id;
-}
-
-nbt_base * nbt_int::clone() const {
-	return new nbt_int(*this);
-}
-
-const int & nbt_int::value() const {
-	return payload;
-}
-
-int & nbt_int::value() {
-	return payload;
-}
+NBT_CPP_NBT_PRIMITIVE_DEFINITION(int, int, 3)

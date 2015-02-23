@@ -20,67 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+#include "primitive_nbt_def.hpp"
 #include "nbt_double.hpp"
 #include <istream>
 #include <ostream>
 
 
-using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_double::nbt_double_id = 6;
-
-
-nbt_double::nbt_double() : nbt_base(), payload(0) {}
-nbt_double::nbt_double(double value) : nbt_base(), payload(value) {}
-nbt_double::nbt_double(const nbt_double & other) : nbt_base(other), payload(other.payload) {}
-nbt_double::nbt_double(nbt_double && other) : nbt_base(move(other)), payload(other.payload) {}
-
-nbt_double::~nbt_double() {}
-
-void nbt_double::swap(nbt_base & with) {
-	swap(dynamic_cast<nbt_double &>(with));
-}
-
-void nbt_double::swap(nbt_double & with) {
-	std::swap(payload, with.payload);
-}
-
-nbt_double & nbt_double::operator=(const nbt_double & from) {
-	nbt_double temp(from);
-	swap(temp);
-	return *this;
-}
-
-bool nbt_double::operator==(const nbt_base & to) {
-	return operator==(dynamic_cast<const nbt_double &>(to));
-}
-
-bool nbt_double::operator==(const nbt_double & to) {
-	return nbt_base::operator==(to) && payload == to.payload;
-}
-
-void nbt_double::read(istream & from) {
-	from.get(static_cast<char *>(static_cast<void *>(&payload)), sizeof(payload));
-}
-
-void nbt_double::write(ostream & to) const {
-	to.write(static_cast<const char *>(static_cast<const void *>(&payload)), sizeof(payload));
-}
-
-unsigned char nbt_double::id() const {
-	return nbt_double_id;
-}
-
-nbt_base * nbt_double::clone() const {
-	return new nbt_double(*this);
-}
-
-const double & nbt_double::value() const {
-	return payload;
-}
-
-double & nbt_double::value() {
-	return payload;
-}
+NBT_CPP_NBT_PRIMITIVE_DEFINITION(double, double, 6)

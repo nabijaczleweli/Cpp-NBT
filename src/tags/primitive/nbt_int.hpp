@@ -25,41 +25,12 @@
 #define NBT_INT_HPP
 
 
+#include "primitive_nbt_decl.hpp"
 #include "../nbt_base.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_int : public nbt_base {
-		private:
-			int payload;
-
-		public:
-			static const unsigned char nbt_int_id;
-
-			nbt_int();
-			nbt_int(int value);
-			nbt_int(const nbt_int & other);
-			nbt_int(nbt_int && other);
-
-			virtual ~nbt_int();
-
-			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_int & with);
-
-			nbt_int & operator=(const nbt_int & from);
-			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_int & to);
-
-			virtual void read(std::istream & from) override;
-			virtual void write(std::ostream & to) const override;
-
-			virtual unsigned char id() const override;
-
-			virtual nbt_base * clone() const override;
-
-			const int & value() const;
-			int & value();
-	};
+	NBT_CPP_NBT_PRIMITIVE_DECLARATION(int, int);
 }
 
 

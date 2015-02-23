@@ -20,18 +20,38 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#pragma once
-#ifndef NBT_LONG_HPP
-#define NBT_LONG_HPP
-
-
-#include "primitive_nbt_decl.hpp"
-#include "../nbt_base.hpp"
-
-
-namespace cpp_nbt {
-	NBT_CPP_NBT_PRIMITIVE_DECLARATION(long, long int);
-}
-
-
-#endif  // NBT_LONG_HPP
+#ifndef NBT_CPP_NBT_PRIMITIVE_DECLARATION
+#define NBT_CPP_NBT_PRIMITIVE_DECLARATION(class_suffix, contained_type) \
+	class nbt_##class_suffix : public nbt_base { \
+		private: \
+			contained_type payload; \
+\
+		public: \
+			static const unsigned char nbt_##class_suffix##_id; \
+\
+\
+			nbt_##class_suffix(); \
+			nbt_##class_suffix(contained_type value); \
+			nbt_##class_suffix(const nbt_##class_suffix & other); \
+			nbt_##class_suffix(nbt_##class_suffix && other); \
+\
+			virtual ~nbt_##class_suffix(); \
+\
+			virtual void swap(nbt_base & with) override; \
+			virtual void swap(nbt_##class_suffix & with); \
+\
+			nbt_##class_suffix & operator=(const nbt_##class_suffix & from); \
+			virtual bool operator==(const nbt_base & to) override; \
+			virtual bool operator==(const nbt_##class_suffix & to); \
+\
+			virtual void read(std::istream & from) override; \
+			virtual void write(std::ostream & to) const override; \
+\
+			virtual unsigned char id() const override; \
+\
+			virtual nbt_base * clone() const override; \
+\
+			const contained_type & value() const; \
+			contained_type & value(); \
+	};
+#endif

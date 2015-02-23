@@ -20,67 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+#include "primitive_nbt_def.hpp"
 #include "nbt_long.hpp"
 #include <istream>
 #include <ostream>
 
 
-using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_long::nbt_long_id = 4;
-
-
-nbt_long::nbt_long() : nbt_base(), payload(0) {}
-nbt_long::nbt_long(long int value) : nbt_base(), payload(value) {}
-nbt_long::nbt_long(const nbt_long & other) : nbt_base(other), payload(other.payload) {}
-nbt_long::nbt_long(nbt_long && other) : nbt_base(move(other)), payload(other.payload) {}
-
-nbt_long::~nbt_long() {}
-
-void nbt_long::swap(nbt_base & with) {
-	swap(dynamic_cast<nbt_long &>(with));
-}
-
-void nbt_long::swap(nbt_long & with) {
-	std::swap(payload, with.payload);
-}
-
-nbt_long & nbt_long::operator=(const nbt_long & from) {
-	nbt_long temp(from);
-	swap(temp);
-	return *this;
-}
-
-bool nbt_long::operator==(const nbt_base & to) {
-	return operator==(dynamic_cast<const nbt_long &>(to));
-}
-
-bool nbt_long::operator==(const nbt_long & to) {
-	return nbt_base::operator==(to) && payload == to.payload;
-}
-
-void nbt_long::read(istream & from) {
-	from.get(static_cast<char *>(static_cast<void *>(&payload)), sizeof(payload));
-}
-
-void nbt_long::write(ostream & to) const {
-	to.write(static_cast<const char *>(static_cast<const void *>(&payload)), sizeof(payload));
-}
-
-unsigned char nbt_long::id() const {
-	return nbt_long_id;
-}
-
-nbt_base * nbt_long::clone() const {
-	return new nbt_long(*this);
-}
-
-const long int & nbt_long::value() const {
-	return payload;
-}
-
-long int & nbt_long::value() {
-	return payload;
-}
+NBT_CPP_NBT_PRIMITIVE_DEFINITION(long, long int, 4)

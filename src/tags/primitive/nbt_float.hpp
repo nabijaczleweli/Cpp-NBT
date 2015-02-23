@@ -25,41 +25,12 @@
 #define NBT_FLOAT_HPP
 
 
+#include "primitive_nbt_decl.hpp"
 #include "../nbt_base.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_float : public nbt_base {
-		private:
-			float payload;
-
-		public:
-			static const unsigned char nbt_float_id;
-
-			nbt_float();
-			nbt_float(float value);
-			nbt_float(const nbt_float & other);
-			nbt_float(nbt_float && other);
-
-			virtual ~nbt_float();
-
-			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_float & with);
-
-			nbt_float & operator=(const nbt_float & from);
-			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_float & to);
-
-			virtual void read(std::istream & from) override;
-			virtual void write(std::ostream & to) const override;
-
-			virtual unsigned char id() const override;
-
-			virtual nbt_base * clone() const override;
-
-			const float & value() const;
-			float & value();
-	};
+	NBT_CPP_NBT_PRIMITIVE_DECLARATION(float, float);
 }
 
 

@@ -25,41 +25,12 @@
 #define NBT_SHORT_HPP
 
 
+#include "primitive_nbt_decl.hpp"
 #include "../nbt_base.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_short : public nbt_base {
-		private:
-			short int payload;
-
-		public:
-			static const unsigned char nbt_short_id;
-
-			nbt_short();
-			nbt_short(short int value);
-			nbt_short(const nbt_short & other);
-			nbt_short(nbt_short && other);
-
-			virtual ~nbt_short();
-
-			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_short & with);
-
-			nbt_short & operator=(const nbt_short & from);
-			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_short & to);
-
-			virtual void read(std::istream & from) override;
-			virtual void write(std::ostream & to) const override;
-
-			virtual unsigned char id() const override;
-
-			virtual nbt_base * clone() const override;
-
-			const short int & value() const;
-			short int & value();
-	};
+	NBT_CPP_NBT_PRIMITIVE_DECLARATION(short, short int);
 }
 
 
