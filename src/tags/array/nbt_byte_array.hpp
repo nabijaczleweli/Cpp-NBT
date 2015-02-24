@@ -25,43 +25,13 @@
 #define NBT_BYTE_ARRAY_HPP
 
 
+#include "array_nbt_decl.hpp"
 #include "../nbt_base.hpp"
 #include <vector>
 
 
 namespace cpp_nbt {
-	class nbt_byte_array : public nbt_base {
-		private:
-			std::vector<char> payload;
-
-		public:
-			static const unsigned char nbt_byte_array_id;
-
-
-			nbt_byte_array();
-			nbt_byte_array(const std::vector<char> value);
-			nbt_byte_array(const nbt_byte_array & other);
-			nbt_byte_array(nbt_byte_array && other);
-
-			virtual ~nbt_byte_array();
-
-			virtual void swap(nbt_base & with) override;
-			virtual void swap(nbt_byte_array & with);
-
-			nbt_byte_array & operator=(const nbt_byte_array & from);
-			virtual bool operator==(const nbt_base & to) override;
-			virtual bool operator==(const nbt_byte_array & to);
-
-			virtual void read(std::istream & from) override;
-			virtual void write(std::ostream & to) const override;
-
-			virtual unsigned char id() const override;
-
-			virtual nbt_base * clone() const override;
-
-			const std::vector<char> & value() const;
-			std::vector<char> & value();
-	};
+	NBT_CPP_NBT_ARRAY_DECLARATION(byte, char);
 }
 
 
