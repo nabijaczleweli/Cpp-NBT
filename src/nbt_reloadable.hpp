@@ -20,14 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "tags/complex/nbt_compound.hpp"
+#include "nbt_loadable.hpp"
+#include "nbt_writeable.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_loadable {
+	class nbt_reloadable : public nbt_loadable, public nbt_writeable {
 		public:
-			virtual void load_from_nbt(const nbt_compound & from) = 0;
-
-			inline virtual ~nbt_loadable() noexcept {}
+			inline virtual ~nbt_reloadable() noexcept {}
 	};
 }

@@ -27,5 +27,7 @@ namespace cpp_nbt {
 	class nbt_writeable {
 		public:
 			virtual void write_to_nbt(nbt_compound & to) const = 0;
+
+			inline virtual ~nbt_writeable() noexcept {}
 	};
 }
