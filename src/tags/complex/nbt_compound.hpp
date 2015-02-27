@@ -26,7 +26,7 @@
 
 
 #include "../nbt_base.hpp"
-#include <experimental/optional>
+#include <memory>
 #include <unordered_map>
 #include <vector>
 #include <string>
@@ -35,13 +35,13 @@
 namespace cpp_nbt {
 	class nbt_compound : public nbt_base {
 		private:
-			std::unordered_map<std::string, nbt_base *> tags;
+			std::unordered_map<std::string, std::shared_ptr<nbt_base>> tags;
 
 		public:
 			static const unsigned char nbt_compound_id;
 
 			nbt_compound();
-			nbt_compound(const std::unordered_map<std::string, nbt_base *> & thetags);
+			nbt_compound(const std::unordered_map<std::string, std::shared_ptr<nbt_base>> & thetags);
 			nbt_compound(const nbt_compound & other);
 			nbt_compound(nbt_compound && other);
 
@@ -63,8 +63,8 @@ namespace cpp_nbt {
 
 			void set_tag(const std::string & key, const nbt_base & tag);
 			void remove_tag(const std::string & key);
-			std::experimental::optional<std::reference_wrapper<const nbt_base>> get_tag(const std::string & key) const;
-			std::experimental::optional<std::reference_wrapper<nbt_base>> get_tag(const std::string & key);
+			std::shared_ptr<const nbt_base> get_tag(const std::string & key) const;
+			std::shared_ptr<nbt_base> get_tag(const std::string & key);
 			bool has_key(const std::string & key) const;
 			bool empty() const;
 
@@ -81,8 +81,8 @@ namespace cpp_nbt {
 			SET_TAG_SIMPLE(boolean, bool)
 #undef SET_TAG_SIMPLE
 #define GET_TAG_SIMPLE(name, type) \
-	std::experimental::optional<std::reference_wrapper<const type>> get_##name(const std::string & key) const; \
-	std::experimental::optional<std::reference_wrapper<type>> get_##name(const std::string & key);
+	const type * get_##name(const std::string & key) const; \
+	type * get_##name(const std::string & key);
 			GET_TAG_SIMPLE(byte, char)
 			GET_TAG_SIMPLE(short, short)
 			GET_TAG_SIMPLE(integer, int)

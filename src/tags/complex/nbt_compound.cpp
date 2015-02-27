@@ -40,37 +40,25 @@
 
 
 using namespace std;
-using namespace std::experimental;
 using namespace cpp_nbt;
-
-
-template<class T>
-using optional_reference = optional<reference_wrapper<T>>;
 
 
 const unsigned char nbt_compound::nbt_compound_id = 10;
 
 
 nbt_compound::nbt_compound() : nbt_base() {}
-nbt_compound::nbt_compound(const unordered_map<string, nbt_base *> & thetags) : nbt_base(), tags(thetags) {
-	if(!tags.empty()) {
+nbt_compound::nbt_compound(const unordered_map<string, shared_ptr<nbt_base>> & thetags) : nbt_base(), tags(thetags) {
+	if(!tags.empty())
 		for(auto & pr : tags)
 			if(pr.second)
-				pr.second = pr.second->clone();
-		/*remove_if(tags.begin(), tags.end(), [&](const pair<string, nbt_base *> & pr) {
-			return !pr.second;
-		});*/ //  Doesn't compile on GCC 4.9.2
-	}
+				pr.second.reset(pr.second->clone(), [&](nbt_base *) {});
+			else
+				tags.erase(pr.first);
 }
 nbt_compound::nbt_compound(const nbt_compound & other) : nbt_compound(other.tags) {}
 nbt_compound::nbt_compound(nbt_compound && other) : nbt_base(move(other)), tags(move(other.tags)) {}
 
-nbt_compound::~nbt_compound() {
-	for(auto & pr : tags) {
-		delete pr.second;
-		pr.second = nullptr;
-	}
-}
+nbt_compound::~nbt_compound() {}
 
 void nbt_compound::swap(nbt_base & with) {
 	swap(dynamic_cast<nbt_compound &>(with));
@@ -111,7 +99,7 @@ void nbt_compound::read(istream & from) {
 		if(!tag)
 			return;  // PANIC MODE!!!
 		tag->read(from);  // Read the tag itself
-		tags.emplace(name.value(), tag);
+		tags.emplace(name.value(), shared_ptr<nbt_base>(tag));
 	}
 
 	// Ends with an nbt_end
@@ -120,17 +108,14 @@ void nbt_compound::read(istream & from) {
 }
 
 void nbt_compound::write(ostream & to) const {
-	/*remove_if(tags.begin(), tags.end(), [&](const pair<string, nbt_base *> & pr) {
-		return !pr.second;
-	});*/ //  Doesn't compile on GCC 4.9.2
-
 	nbt_string name;
-	for(const auto & pr : tags) {
-		nbt_manager::write_id(to, pr.second->id());  // Write id
-		name.value() = pr.first;
-		name.write(to);  // Write name
-		pr.second->write(to);  // Write tag itself
-	}
+	for(const auto & pr : tags)
+		if(pr.second) {
+			nbt_manager::write_id(to, pr.second->id());  // Write id
+			name.value() = pr.first;
+			name.write(to);  // Write name
+			pr.second->write(to);  // Write tag itself
+		}
 
 	// End with an nbt_end
 	nbt_manager::write_id(to, nbt_end::nbt_end_id);
@@ -149,25 +134,24 @@ nbt_base * nbt_compound::clone() const {
 
 void nbt_compound::set_tag(const string & key, const nbt_base & tag) {
 	const auto itr = tags.find(key);
-	if(itr != tags.end()) {
-		delete itr->second;
-		itr->second = tag.clone();
-	} else
-		tags.emplace(key, tag.clone());
+	if(itr != tags.end())
+		itr->second.reset(tag.clone());
+	else
+		tags.emplace(key, shared_ptr<nbt_base>(tag.clone()));
 }
 
 void nbt_compound::remove_tag(const string & key) {
 	tags.erase(key);
 }
 
-optional_reference<const nbt_base> nbt_compound::get_tag(const string & key) const {
+shared_ptr<const nbt_base> nbt_compound::get_tag(const string & key) const {
 	const auto itr = tags.find(key);
-	return (itr == tags.end()) ? optional_reference<const nbt_base>() : optional_reference<const nbt_base>(*itr->second);
+	return (itr == tags.end()) ? shared_ptr<const nbt_base>() : itr->second;
 }
 
-optional_reference<nbt_base> nbt_compound::get_tag(const string & key) {
+shared_ptr<nbt_base> nbt_compound::get_tag(const string & key) {
 	const auto itr = tags.find(key);
-	return (itr == tags.end()) ? optional_reference<nbt_base>() : optional_reference<nbt_base>(*itr->second);
+	return (itr == tags.end()) ? shared_ptr<nbt_base>() : itr->second;
 }
 
 bool nbt_compound::has_key(const string & key) const {
@@ -197,13 +181,13 @@ SET_TAG_IMPL_SIMPLE(boolean, bool, nbt_byte)
 
 #undef SET_TAG_IMPL_SIMPLE
 #define GET_TAG_IMPL_SIMPLE(name, type, clas) \
-	optional_reference<const type> nbt_compound::get_##name(const string & key) const { \
-		const auto & tagref(get_tag(key)); \
-		return tagref ? optional_reference<const type>(dynamic_cast<const clas &>(tagref->get()).value()) : optional_reference<const type>(); \
+	const type * nbt_compound::get_##name(const string & key) const { \
+		const auto tagptr = get_tag(key); \
+		return tagptr ? &dynamic_cast<const clas &>(*tagptr).value() : nullptr; \
 	} \
-	optional_reference<type> nbt_compound::get_##name(const string & key) { \
-		const auto & tagref(get_tag(key)); \
-		return tagref ? optional_reference<type>(dynamic_cast<clas &>(tagref->get()).value()) : optional_reference<type>(); \
+	type * nbt_compound::get_##name(const string & key) { \
+		const auto tagptr = get_tag(key); \
+		return tagptr ? &dynamic_cast<clas &>(*tagptr).value() : nullptr; \
 	}
 
 GET_TAG_IMPL_SIMPLE(byte, char, nbt_byte)
@@ -218,16 +202,12 @@ GET_TAG_IMPL_SIMPLE(int_array, vector<int>, nbt_int_array)
 
 #undef GET_TAG_IMPL_SIMPLE
 
-optional_reference<const bool> nbt_compound::get_boolean(const string & key) const {
-	const auto & tagref(get_tag(key));
-	if(!tagref)
-		return optional_reference<const bool>();
-	return optional_reference<const bool>(*static_cast<const bool *>(static_cast<const void *>(&dynamic_cast<const nbt_byte &>(tagref->get()).value())));
+const bool * nbt_compound::get_boolean(const string & key) const {
+	const auto tagptr = get_tag(key);
+	return tagptr ? static_cast<const bool *>(static_cast<const void *>(&dynamic_cast<const nbt_byte &>(*tagptr).value())) : nullptr;
 }
 
-optional_reference<bool> nbt_compound::get_boolean(const string & key) {
-	const auto & tagref(get_tag(key));
-	if(!tagref)
-		return optional_reference<bool>();
-	return optional_reference<bool>(*static_cast<bool *>(static_cast<void *>(&dynamic_cast<nbt_byte &>(tagref->get()).value())));
+bool * nbt_compound::get_boolean(const string & key) {
+	const auto tagptr = get_tag(key);
+	return tagptr ? static_cast<bool *>(static_cast<void *>(&dynamic_cast<nbt_byte &>(*tagptr).value())) : nullptr;
 }
