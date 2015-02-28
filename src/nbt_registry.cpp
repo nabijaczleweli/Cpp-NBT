@@ -36,12 +36,9 @@
 
 
 using namespace std;
-using namespace std::experimental;
 using namespace cpp_nbt;
 
 
-template<class T>
-using optional_reference = optional<reference_wrapper<T>>;
 typedef nbt_registry::creator_t creator_t;
 
 
@@ -78,7 +75,7 @@ nbt_base * nbt_registry::create(unsigned char id) {
 	return temp ? (*temp)() : nullptr;
 }
 
-optional_reference<const creator_t> nbt_registry::creator(unsigned char id) {
+const creator_t * nbt_registry::creator(unsigned char id) {
 	const auto itr = id_to_pointer_map.find(id);
-	return (itr == id_to_pointer_map.end()) ? optional_reference<const creator_t>() : optional_reference<const creator_t>(itr->second);
+	return (itr == id_to_pointer_map.end()) ? nullptr : &itr->second;
 }

@@ -33,7 +33,7 @@ SOURCES = nbt_registry nbt_manager $(foreach tag,$(TAGS),tags/$(tag))
 all : dll
 
 clean :
-	rm -rf $(BUILD) $(TEST)/*$(EXE)
+	rm -rf $(BUILD)
 
 dll : $(foreach src,$(SOURCES),$(BUILD)/$(src)$(OBJ))
 	$(CPP) $(CPPAR) -shared -fpic -o$(BUILD)/cpp-nbt$(DLL) $^
@@ -42,6 +42,3 @@ dll : $(foreach src,$(SOURCES),$(BUILD)/$(src)$(OBJ))
 $(BUILD)/%$(OBJ) : src/%.cpp
 	@mkdir -p $(dir $@) 1>$(nul) 2>$(nul)
 	$(CPP) $(CPPAR) -c -o$@ $^
-
-%$(EXE) : %.cpp
-	$(CPP) $(CPPAR) -Isrc -Lout -lcpponfig -o$@ $^

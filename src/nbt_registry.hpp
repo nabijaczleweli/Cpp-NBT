@@ -43,7 +43,7 @@ namespace cpp_nbt {
 			static void register_id(unsigned char id, const creator_t & func);
 
 			static nbt_base * create(unsigned char id);
-			static std::experimental::optional<std::reference_wrapper<const creator_t>> creator(unsigned char id);
+			static const creator_t * creator(unsigned char id);
 	};
 }
 
