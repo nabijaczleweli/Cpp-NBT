@@ -24,10 +24,10 @@
 
 
 namespace cpp_nbt {
-	class nbt_loadable {
+	class nbt_readable {
 		public:
-			virtual void load_from_nbt(const nbt_compound & from) = 0;
+			virtual void read_from_nbt(const nbt_compound & from) = 0;
 
-			inline virtual ~nbt_loadable() noexcept {}
+			inline virtual ~nbt_readable() noexcept {}
 	};
 }

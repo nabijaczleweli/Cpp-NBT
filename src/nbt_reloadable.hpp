@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_loadable.hpp"
+#include "nbt_readable.hpp"
 #include "nbt_writeable.hpp"
 
 
 namespace cpp_nbt {
-	class nbt_reloadable : public nbt_loadable, public nbt_writeable {
+	class nbt_reloadable : public nbt_readable, public nbt_writeable {
 		public:
 			inline virtual ~nbt_reloadable() noexcept {}
 	};
