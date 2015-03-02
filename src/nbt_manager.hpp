@@ -26,6 +26,8 @@
 
 
 #include "tags/nbt_base.hpp"
+#include "nbt_readable.hpp"
+#include "nbt_writeable.hpp"
 #include <iosfwd>
 
 
@@ -34,9 +36,11 @@ namespace cpp_nbt {
 		public:
 			static unsigned char read_id(std::istream & from);
 			static nbt_base * read_tag(std::istream & from);
+			static bool read_readable(std::istream & from, nbt_readable & toread);
 
 			static void write_id(std::ostream & to, unsigned char id);
 			static void write_tag(std::ostream & to, const nbt_base & tag);
+			static void write_writeable(std::ostream & to, const nbt_writeable & towrite);
 	};
 }
 

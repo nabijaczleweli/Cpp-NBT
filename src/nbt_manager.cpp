@@ -22,6 +22,7 @@
 
 #include "nbt_manager.hpp"
 #include "nbt_registry.hpp"
+#include "tags/complex/nbt_compound.hpp"
 #include <istream>
 
 
@@ -41,6 +42,18 @@ nbt_base * nbt_manager::read_tag(istream & from) {
 	return temp;
 }
 
+bool nbt_manager::read_readable(istream & from, nbt_readable & toread) {
+	nbt_base * tag = read_tag(from);
+	nbt_compound * compound = dynamic_cast<nbt_compound *>(tag);
+	if(!compound) {
+		delete tag;
+		tag = nullptr;
+		return false;
+	}
+	toread.read_from_nbt(*compound);
+	return true;
+}
+
 void nbt_manager::write_id(ostream & to, unsigned char id) {
 	to.put(id);
 }
@@ -48,4 +61,10 @@ void nbt_manager::write_id(ostream & to, unsigned char id) {
 void nbt_manager::write_tag(ostream & to, const nbt_base & tag) {
 	write_id(to, tag.id());
 	tag.write(to);
+}
+
+void nbt_manager::write_writeable(ostream & to, const nbt_writeable & towrite) {
+	nbt_compound tag;
+	towrite.write_to_nbt(tag);
+	write_tag(to, tag);
 }
