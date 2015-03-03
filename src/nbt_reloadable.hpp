@@ -27,6 +27,6 @@
 namespace cpp_nbt {
 	class nbt_reloadable : public nbt_readable, public nbt_writeable {
 		public:
-			inline virtual ~nbt_reloadable() noexcept {}
+			inline virtual ~nbt_reloadable() noexcept = default;
 	};
 }

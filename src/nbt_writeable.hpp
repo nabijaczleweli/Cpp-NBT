@@ -28,6 +28,6 @@ namespace cpp_nbt {
 		public:
 			virtual void write_to_nbt(nbt_compound & to) const = 0;
 
-			inline virtual ~nbt_writeable() noexcept {}
+			inline virtual ~nbt_writeable() noexcept = default;
 	};
 }

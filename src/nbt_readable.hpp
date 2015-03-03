@@ -28,6 +28,6 @@ namespace cpp_nbt {
 		public:
 			virtual void read_from_nbt(const nbt_compound & from) = 0;
 
-			inline virtual ~nbt_readable() noexcept {}
+			inline virtual ~nbt_readable() noexcept = default;
 	};
 }
