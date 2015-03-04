@@ -35,7 +35,7 @@
 			nbt_##class_suffix(const nbt_##class_suffix & other); \
 			nbt_##class_suffix(nbt_##class_suffix && other); \
 \
-			virtual ~nbt_##class_suffix(); \
+			virtual ~nbt_##class_suffix() = default; \
 \
 			virtual void swap(nbt_base & with) override; \
 			virtual void swap(nbt_##class_suffix & with); \

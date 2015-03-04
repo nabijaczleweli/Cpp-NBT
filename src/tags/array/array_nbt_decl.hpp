@@ -35,7 +35,7 @@
 			nbt_##class_suffix##_array(const nbt_##class_suffix##_array & other); \
 			nbt_##class_suffix##_array(nbt_##class_suffix##_array && other); \
 \
-			virtual ~nbt_##class_suffix##_array(); \
+			virtual ~nbt_##class_suffix##_array() = default; \
 \
 			virtual void swap(nbt_base & with) override; \
 			virtual void swap(nbt_##class_suffix##_array & with); \

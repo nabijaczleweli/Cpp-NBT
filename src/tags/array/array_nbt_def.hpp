@@ -31,8 +31,6 @@ nbt_##class_suffix##_array::nbt_##class_suffix##_array(const std::vector<contain
 nbt_##class_suffix##_array::nbt_##class_suffix##_array(const nbt_##class_suffix##_array & other) : nbt_base(other), payload(other.payload) {} \
 nbt_##class_suffix##_array::nbt_##class_suffix##_array(nbt_##class_suffix##_array && other) : nbt_base(std::move(other)), payload(std::move(other.payload)) {} \
 \
-nbt_##class_suffix##_array::~nbt_##class_suffix##_array() {} \
-\
 void nbt_##class_suffix##_array::swap(nbt_base & with) { \
 	swap(dynamic_cast<nbt_##class_suffix##_array &>(with)); \
 } \

@@ -31,8 +31,6 @@ nbt_##class_suffix::nbt_##class_suffix(contained_type value) : nbt_base(), paylo
 nbt_##class_suffix::nbt_##class_suffix(const nbt_##class_suffix & other) : nbt_base(other), payload(other.payload) {} \
 nbt_##class_suffix::nbt_##class_suffix(nbt_##class_suffix && other) : nbt_base(std::move(other)), payload(other.payload) {} \
 \
-nbt_##class_suffix::~nbt_##class_suffix() {} \
-\
 void nbt_##class_suffix::swap(nbt_base & with) { \
 	swap(dynamic_cast<nbt_##class_suffix &>(with)); \
 } \
