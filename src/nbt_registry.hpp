@@ -33,6 +33,9 @@
 
 namespace cpp_nbt {
 	class nbt_registry {
+		private:
+			nbt_registry() = delete;  // Don't instantiate
+
 		public:
 			typedef const std::function<nbt_base *()> creator_t;
 

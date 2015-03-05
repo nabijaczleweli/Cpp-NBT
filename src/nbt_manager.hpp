@@ -33,6 +33,9 @@
 
 namespace cpp_nbt {
 	class nbt_manager {
+		private:
+			nbt_manager() = delete;  // Don't instantiate
+
 		public:
 			static unsigned char read_id(std::istream & from);
 			static nbt_base * read_tag(std::istream & from);
