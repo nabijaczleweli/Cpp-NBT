@@ -22,6 +22,7 @@
 
 #include "nbt_list.hpp"
 #include "../../nbt_registry.hpp"
+#include <algorithm>
 #include <istream>
 #include <ostream>
 
@@ -29,10 +30,6 @@
 using namespace std;
 using namespace std::experimental;
 using namespace cpp_nbt;
-
-
-template<class T>
-using optional_reference = optional<reference_wrapper<T>>;
 
 
 const unsigned char nbt_list::nbt_list_id = 9;
@@ -47,26 +44,23 @@ bool nbt_list::try_tag_type(const nbt_base & tag) {
 }
 
 nbt_list::nbt_list() : nbt_base(), tag_type(0) {}
-nbt_list::nbt_list(const vector<nbt_base *> & thetags) : nbt_base(), tag_type(0), tags(thetags) {
+nbt_list::nbt_list(const vector<shared_ptr<nbt_base>> & thetags) : nbt_base(), tag_type(0), tags(thetags) {
 	if(!tags.empty()) {
 		for(auto & ptr : tags)
 			if(ptr) {
-				ptr = ptr->clone();
+				ptr.reset(ptr->clone(), [&](nbt_base *) {});
 				if(!tag_type)
 					tag_type = ptr->id();
 			}
-		// remove(tags.begin(), tags.end(), nullptr);  Doesn't compile on GCC 4.9.2
+		remove_if(tags.begin(), tags.end(), [&](const shared_ptr<nbt_base> & tag) {
+			return !tag;
+		});
 	}
 }
 nbt_list::nbt_list(const nbt_list & other) : nbt_list(other.tags) {}
 nbt_list::nbt_list(nbt_list && other) : nbt_base(move(other)), tag_type(other.tag_type), tags(move(other.tags)) {}
 
-nbt_list::~nbt_list() {
-	for(auto & ptr : tags) {
-		delete ptr;
-		ptr = nullptr;
-	}
-}
+nbt_list::~nbt_list() {}
 
 void nbt_list::swap(nbt_base & with) {
 	swap(dynamic_cast<nbt_list &>(with));
@@ -92,7 +86,7 @@ bool nbt_list::operator==(const nbt_list & to) {
 	if(!temp || tags.size() != to.tags.size())
 		return false;
 
-	return equal(tags.begin(), tags.end(), to.tags.begin(), to.tags.end(), [&](nbt_base * lhs, nbt_base * rhs) {
+	return equal(tags.begin(), tags.end(), to.tags.begin(), to.tags.end(), [&](const shared_ptr<nbt_base> & lhs, const shared_ptr<nbt_base> & rhs) {
 		return (lhs == rhs) || ((lhs && rhs) && (*lhs == *rhs));
 	});
 }
@@ -108,7 +102,7 @@ void nbt_list::read(istream & from) {
 		const auto & creator(*creatorr);
 		tags.resize(*length, nullptr);
 		for(auto & ptr : tags) {
-			ptr = creator();
+			ptr.reset(creator());
 			ptr->read(from);
 		}
 	}
@@ -119,7 +113,6 @@ void nbt_list::read(istream & from) {
 void nbt_list::write(ostream & to) const {
 	to.write(static_cast<const char *>(static_cast<const void *>(&tag_type)), 1);
 
-	// remove(tags.begin(), tags.end(), nullptr);  Doesn't compile on GCC 4.9.2
 	const unsigned int * length = new unsigned int(tags.size());
 	to.write(static_cast<const char *>(static_cast<const void *>(length)), sizeof(*length));
 
@@ -148,8 +141,7 @@ bool nbt_list::set_tag(unsigned int idx, const nbt_base & tag) {
 	if(idx >= tags.size() || !try_tag_type(tag))
 		return false;
 
-	delete tags[idx];
-	tags[idx] = tag.clone();
+	tags[idx].reset(tag.clone());
 	return true;
 }
 
@@ -157,7 +149,6 @@ void nbt_list::remove_tag(unsigned int idx) {
 	if(idx >= tags.size())
 	   return;
 
-	delete tags[idx];
 	tags.erase(tags.cbegin() + idx);
 }
 
@@ -165,10 +156,10 @@ size_t nbt_list::count() const {
 	return tags.size();
 }
 
-optional_reference<const nbt_base> nbt_list::get(unsigned int idx) const {
-	return tags[idx] ? optional_reference<const nbt_base>(cref(*tags[idx])) : optional_reference<const nbt_base>();
+shared_ptr<const nbt_base> nbt_list::get(unsigned int idx) const {
+	return (idx < tags.size()) ? tags[idx] : shared_ptr<const nbt_base>();
 }
 
-optional_reference<nbt_base> nbt_list::get(unsigned int idx) {
-	return tags[idx] ? optional_reference<nbt_base>(ref(*tags[idx])) : optional_reference<nbt_base>();
+shared_ptr<nbt_base> nbt_list::get(unsigned int idx) {
+	return (idx < tags.size()) ? tags[idx] : shared_ptr<nbt_base>();
 }

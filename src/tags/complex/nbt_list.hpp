@@ -26,7 +26,7 @@
 
 
 #include "../nbt_base.hpp"
-#include <experimental/optional>
+#include <memory>
 #include <vector>
 
 
@@ -34,7 +34,7 @@ namespace cpp_nbt {
 	class nbt_list : public nbt_base {
 		private:
 			unsigned char tag_type;
-			std::vector<nbt_base *> tags;
+			std::vector<std::shared_ptr<nbt_base>> tags;
 
 			bool try_tag_type(const nbt_base & tag);
 			void remake_tags();
@@ -43,7 +43,7 @@ namespace cpp_nbt {
 			static const unsigned char nbt_list_id;
 
 			nbt_list();
-			nbt_list(const std::vector<nbt_base *> & thetags);
+			explicit nbt_list(const std::vector<std::shared_ptr<nbt_base>> & thetags);
 			nbt_list(const nbt_list & other);
 			nbt_list(nbt_list && other);
 
@@ -67,8 +67,8 @@ namespace cpp_nbt {
 			bool set_tag(unsigned int idx, const nbt_base & tag);
 			void remove_tag(unsigned int idx);
 			size_t count() const;
-			std::experimental::optional<std::reference_wrapper<const nbt_base>> get(unsigned int idx) const;
-			std::experimental::optional<std::reference_wrapper<nbt_base>> get(unsigned int idx);
+			std::shared_ptr<const nbt_base> get(unsigned int idx) const;
+			std::shared_ptr<nbt_base> get(unsigned int idx);
 	};
 }
 

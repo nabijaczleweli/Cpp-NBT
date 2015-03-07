@@ -31,7 +31,7 @@
 \
 \
 			nbt_##class_suffix##_array(); \
-			nbt_##class_suffix##_array(const std::vector<contained_type> & value); \
+			explicit nbt_##class_suffix##_array(const std::vector<contained_type> & value); \
 			nbt_##class_suffix##_array(const nbt_##class_suffix##_array & other); \
 			nbt_##class_suffix##_array(nbt_##class_suffix##_array && other); \
 \

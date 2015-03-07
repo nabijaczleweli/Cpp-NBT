@@ -38,7 +38,7 @@ namespace cpp_nbt {
 			static const unsigned char nbt_string_id;
 
 			nbt_string();
-			nbt_string(const std::string & str);
+			explicit nbt_string(const std::string & str);
 			nbt_string(const nbt_string & other);
 			nbt_string(nbt_string && other);
 
