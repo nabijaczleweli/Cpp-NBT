@@ -47,13 +47,10 @@ const unsigned char nbt_compound::nbt_compound_id = 10;
 
 
 nbt_compound::nbt_compound() : nbt_base() {}
-nbt_compound::nbt_compound(const unordered_map<string, shared_ptr<nbt_base>> & thetags) : nbt_base(), tags(thetags) {
-	if(!tags.empty())
-		for(auto & pr : tags)
-			if(pr.second)
-				pr.second.reset(pr.second->clone(), [&](nbt_base *) {});
-			else
-				tags.erase(pr.first);
+nbt_compound::nbt_compound(const unordered_map<string, shared_ptr<nbt_base>> & thetags) : nbt_base() {
+	transform(thetags.begin(), thetags.end(), inserter(tags, tags.begin()), [&](const pair<string, shared_ptr<nbt_base>> & pr) {
+		return make_pair(pr.first, shared_ptr<nbt_base>(pr.second ? pr.second->clone() : nullptr));
+	});
 }
 nbt_compound::nbt_compound(const nbt_compound & other) : nbt_compound(other.tags) {}
 nbt_compound::nbt_compound(nbt_compound && other) : nbt_base(move(other)), tags(move(other.tags)) {}
@@ -133,11 +130,7 @@ nbt_base * nbt_compound::clone() const {
 }
 
 void nbt_compound::set_tag(const string & key, const nbt_base & tag) {
-	const auto itr = tags.find(key);
-	if(itr != tags.end())
-		itr->second.reset(tag.clone());
-	else
-		tags.emplace(key, shared_ptr<nbt_base>(tag.clone()));
+	tags[key].reset(tag.clone());
 }
 
 void nbt_compound::remove_tag(const string & key) {
