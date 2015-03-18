@@ -37,7 +37,6 @@ namespace cpp_nbt {
 			std::vector<std::shared_ptr<nbt_base>> tags;
 
 			bool try_tag_type(const nbt_base & tag);
-			void remake_tags();
 
 		public:
 			static const unsigned char nbt_list_id;

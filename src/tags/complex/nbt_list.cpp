@@ -22,13 +22,15 @@
 
 #include "nbt_list.hpp"
 #include "../../nbt_registry.hpp"
+#include <stdexcept>
 #include <algorithm>
+#include <iterator>
 #include <istream>
 #include <ostream>
+#include <sstream>
 
 
 using namespace std;
-using namespace std::experimental;
 using namespace cpp_nbt;
 
 
@@ -49,8 +51,27 @@ nbt_list::nbt_list(const vector<shared_ptr<nbt_base>> & thetags) : nbt_base(), t
 		return shared_ptr<nbt_base>(ptr ? ptr->clone() : nullptr);
 	});
 	tags.erase(remove_if(tags.begin(), tags.end(), logical_not<>()), tags.end());
-	if(!tags.empty())
-		tag_type = tags[0]->id();
+
+	if(!tags.empty()) {
+		if(adjacent_find(tags.begin(), tags.end(), [&](const shared_ptr<nbt_base> & lhs, const shared_ptr<nbt_base> & rhs) {
+				return lhs->id() != rhs->id();
+			}) != tags.end()) {
+			vector<unsigned char> ids;
+			transform(tags.begin(), tags.end(), back_inserter(ids), [&](const shared_ptr<nbt_base> & ptr) {
+				return ptr->id();
+			});
+			sort(ids.begin(), ids.end());
+
+			ostringstream strm;
+			strm << "Multiple tag id()s: ";
+			unique_copy(ids.begin(), ids.end(), ostream_iterator<unsigned int>(strm, ", "));
+
+			string msg = strm.str();
+			msg.replace(msg.size() - 2, 2, "!");
+			throw invalid_argument(msg);
+		} else
+			tag_type = tags[0]->id();
+	}
 }
 nbt_list::nbt_list(const nbt_list & other) : nbt_list(other.tags) {}
 nbt_list::nbt_list(nbt_list && other) : nbt_base(move(other)), tag_type(other.tag_type), tags(move(other.tags)) {}
