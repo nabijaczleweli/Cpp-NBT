@@ -92,11 +92,11 @@ void nbt_compound::read(istream & from) {
 	unsigned char id;
 	while((id = nbt_manager::read_id(from)) != nbt_end::nbt_end_id) {  // Read id
 		name.read(from);  // Read name
-		nbt_base * tag = nbt_registry::create(id);
+		unique_ptr<nbt_base> tag = nbt_registry::create(id);
 		if(!tag)
 			return;  // PANIC MODE!!!
 		tag->read(from);  // Read the tag itself
-		tags.emplace(name.value(), shared_ptr<nbt_base>(tag));
+		tags.emplace(name.value(), shared_ptr<nbt_base>(move(tag)));
 	}
 
 	// Ends with an nbt_end
@@ -125,12 +125,12 @@ unsigned char nbt_compound::id() const {
 	return nbt_compound_id;
 }
 
-nbt_base * nbt_compound::clone() const {
-	return new nbt_compound(*this);
+unique_ptr<nbt_base> nbt_compound::clone() const {
+	return make_unique<nbt_compound>(*this);
 }
 
 void nbt_compound::set_tag(const string & key, const nbt_base & tag) {
-	tags[key].reset(tag.clone());
+	tags[key] = tag.clone();
 }
 
 void nbt_compound::remove_tag(const string & key) {

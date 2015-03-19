@@ -35,21 +35,19 @@ unsigned char nbt_manager::read_id(istream & from) {
 	return (ret == istream::traits_type::eof()) ? -1 : ret;
 }
 
-nbt_base * nbt_manager::read_tag(istream & from) {
-	nbt_base * temp = nbt_registry::create(read_id(from));
+unique_ptr<nbt_base> nbt_manager::read_tag(istream & from) {
+	unique_ptr<nbt_base> temp = nbt_registry::create(read_id(from));
 	if(temp)
 		temp->read(from);
 	return temp;
 }
 
 bool nbt_manager::read_readable(istream & from, nbt_readable & toread) {
-	nbt_base * tag = read_tag(from);
-	nbt_compound * compound = dynamic_cast<nbt_compound *>(tag);
-	if(!compound) {
-		delete tag;
-		tag = nullptr;
+	unique_ptr<nbt_base> tag = read_tag(from);
+	nbt_compound * compound = dynamic_cast<nbt_compound *>(tag.get());
+
+	if(!compound)
 		return false;
-	}
 	toread.read_from_nbt(*compound);
 	return true;
 }

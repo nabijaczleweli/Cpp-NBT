@@ -118,7 +118,7 @@ void nbt_list::read(istream & from) {
 		const auto & creator(*creatorr);
 		tags.resize(*length, nullptr);
 		for(auto & ptr : tags) {
-			ptr.reset(creator());
+			ptr = creator();
 			ptr->read(from);
 		}
 	}
@@ -142,8 +142,8 @@ unsigned char nbt_list::id() const {
 	return nbt_list_id;
 }
 
-nbt_base * nbt_list::clone() const {
-	return new nbt_list(*this);
+unique_ptr<nbt_base> nbt_list::clone() const {
+	return make_unique<nbt_list>(*this);
 }
 
 bool nbt_list::append_tag(const nbt_base & tag) {
@@ -157,7 +157,7 @@ bool nbt_list::set_tag(unsigned int idx, const nbt_base & tag) {
 	if(idx >= tags.size() || !try_tag_type(tag))
 		return false;
 
-	tags[idx].reset(tag.clone());
+	tags[idx] = tag.clone();
 	return true;
 }
 

@@ -81,8 +81,8 @@ void nbt_string::write(ostream & to) const {
 	delete length; length = nullptr;
 }
 
-nbt_base * nbt_string::clone() const {
-	return new nbt_string(*this);
+unique_ptr<nbt_base> nbt_string::clone() const {
+	return make_unique<nbt_string>(*this);
 }
 
 unsigned char nbt_string::id() const {

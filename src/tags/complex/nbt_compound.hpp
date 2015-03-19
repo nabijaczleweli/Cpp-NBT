@@ -59,7 +59,7 @@ namespace cpp_nbt {
 
 			virtual unsigned char id() const override;
 
-			virtual nbt_base * clone() const override;
+			virtual std::unique_ptr<nbt_base> clone() const override;
 
 			void set_tag(const std::string & key, const nbt_base & tag);
 			void remove_tag(const std::string & key);

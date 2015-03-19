@@ -60,7 +60,7 @@ namespace cpp_nbt {
 
 			virtual unsigned char id() const override;
 
-			virtual nbt_base * clone() const override;
+			virtual std::unique_ptr<nbt_base> clone() const override;
 
 			bool append_tag(const nbt_base & tag);
 			bool set_tag(unsigned int idx, const nbt_base & tag);

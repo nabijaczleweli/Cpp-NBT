@@ -26,6 +26,7 @@
 
 
 #include <iosfwd>
+#include <memory>
 
 
 namespace cpp_nbt {
@@ -47,7 +48,7 @@ namespace cpp_nbt {
 
 			virtual unsigned char id() const = 0;
 
-			virtual nbt_base * clone() const = 0;
+			virtual std::unique_ptr<nbt_base> clone() const = 0;
 	};
 }
 

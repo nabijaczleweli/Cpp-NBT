@@ -27,6 +27,7 @@
 
 #include "nbt_base.hpp"
 #include <string>
+#include <memory>
 
 
 namespace cpp_nbt {
@@ -56,7 +57,7 @@ namespace cpp_nbt {
 
 			virtual unsigned char id() const override;
 
-			virtual nbt_base * clone() const override;
+			virtual std::unique_ptr<nbt_base> clone() const override;
 
 			const std::string & value() const;
 			std::string & value();

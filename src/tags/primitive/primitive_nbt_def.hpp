@@ -20,6 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+#include <memory>
+
+
 #ifndef NBT_CPP_NBT_PRIMITIVE_DEFINITION
 	// `nbt_##class_suffix` class must be brought to default namespace (as by using namespace cpp_nbt)
 	#define NBT_CPP_NBT_PRIMITIVE_DEFINITION(class_suffix, contained_type, tag_id) \
@@ -65,8 +68,8 @@ unsigned char nbt_##class_suffix::id() const { \
 	return nbt_##class_suffix##_id; \
 } \
 \
-nbt_base * nbt_##class_suffix::clone() const { \
-	return new nbt_##class_suffix(*this); \
+std::unique_ptr<nbt_base> nbt_##class_suffix::clone() const { \
+	return std::make_unique<nbt_##class_suffix>(*this); \
 } \
 \
 const contained_type & nbt_##class_suffix::value() const { \

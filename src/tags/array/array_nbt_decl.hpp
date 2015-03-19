@@ -49,7 +49,7 @@
 \
 			virtual unsigned char id() const override; \
 \
-			virtual nbt_base * clone() const override; \
+			virtual std::unique_ptr<nbt_base> clone() const override; \
 \
 			const std::vector<contained_type> & value() const; \
 			std::vector<contained_type> & value(); \

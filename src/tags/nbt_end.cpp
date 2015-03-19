@@ -46,6 +46,6 @@ unsigned char nbt_end::id() const {
 	return nbt_end_id;
 }
 
-nbt_base * nbt_end::clone() const {
-	return new nbt_end(*this);
+unique_ptr<nbt_base> nbt_end::clone() const {
+	return make_unique<nbt_end>(*this);
 }

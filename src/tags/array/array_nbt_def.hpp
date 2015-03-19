@@ -20,6 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+#include <memory>
+
+
 #ifndef NBT_CPP_NBT_ARRAY_DEFINITION
 	// `nbt_##class_suffix##_array` class must be brought to default namespace (as by using namespace cpp_nbt)
 	#define NBT_CPP_NBT_ARRAY_DEFINITION(class_suffix, contained_type, tag_id) \
@@ -76,8 +79,8 @@ unsigned char nbt_##class_suffix##_array::id() const { \
 	return nbt_##class_suffix##_array##_id; \
 } \
 \
-nbt_base * nbt_##class_suffix##_array::clone() const { \
-	return new nbt_##class_suffix##_array(*this); \
+std::unique_ptr<nbt_base> nbt_##class_suffix##_array::clone() const { \
+	return std::make_unique<nbt_##class_suffix##_array>(*this); \
 } \
 \
 const std::vector<contained_type> & nbt_##class_suffix##_array::value() const { \

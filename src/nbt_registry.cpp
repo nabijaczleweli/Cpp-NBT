@@ -44,8 +44,8 @@ typedef nbt_registry::creator_t creator_t;
 
 template<class T>
 struct default_creator {
-	constexpr nbt_base * operator()() const {
-		return new T;
+	constexpr unique_ptr<nbt_base> operator()() const {
+		return make_unique<T>();
 	}
 };
 
@@ -70,9 +70,9 @@ void nbt_registry::register_id(unsigned char id, const creator_t & func) {
 	id_to_pointer_map.emplace(id, func);
 }
 
-nbt_base * nbt_registry::create(unsigned char id) {
+unique_ptr<nbt_base> nbt_registry::create(unsigned char id) {
 	const auto temp(creator(id));
-	return temp ? (*temp)() : nullptr;
+	return temp ? (*temp)() : unique_ptr<nbt_base>();
 }
 
 const creator_t * nbt_registry::creator(unsigned char id) {

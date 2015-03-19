@@ -29,6 +29,7 @@
 #include <experimental/optional>
 #include <unordered_map>
 #include <functional>
+#include <memory>
 
 
 namespace cpp_nbt {
@@ -37,7 +38,7 @@ namespace cpp_nbt {
 			nbt_registry() = delete;  // Don't instantiate
 
 		public:
-			typedef const std::function<nbt_base *()> creator_t;
+			typedef const std::function<std::unique_ptr<nbt_base>()> creator_t;
 
 		private:
 			static std::unordered_map<unsigned char, creator_t> id_to_pointer_map;  // Comes preloaded with all default types
@@ -45,7 +46,7 @@ namespace cpp_nbt {
 		public:
 			static void register_id(unsigned char id, const creator_t & func);
 
-			static nbt_base * create(unsigned char id);
+			static std::unique_ptr<nbt_base> create(unsigned char id);
 			static const creator_t * creator(unsigned char id);
 	};
 }
