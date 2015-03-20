@@ -36,6 +36,7 @@
 
 
 using namespace std;
+using namespace std::experimental;
 using namespace cpp_nbt;
 
 
@@ -75,7 +76,7 @@ unique_ptr<nbt_base> nbt_registry::create(unsigned char id) {
 	return temp ? (*temp)() : unique_ptr<nbt_base>();
 }
 
-const creator_t * nbt_registry::creator(unsigned char id) {
+optional<creator_t> nbt_registry::creator(unsigned char id) {
 	const auto itr = id_to_pointer_map.find(id);
-	return (itr == id_to_pointer_map.end()) ? nullptr : &itr->second;
+	return (itr == id_to_pointer_map.end()) ? optional<creator_t>() : optional<creator_t>(itr->second);
 }

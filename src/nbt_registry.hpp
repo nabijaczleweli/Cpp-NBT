@@ -47,7 +47,7 @@ namespace cpp_nbt {
 			static void register_id(unsigned char id, const creator_t & func);
 
 			static std::unique_ptr<nbt_base> create(unsigned char id);
-			static const creator_t * creator(unsigned char id);
+			static std::experimental::optional<creator_t> creator(unsigned char id);
 	};
 }
 
