@@ -45,7 +45,7 @@ typedef nbt_registry::creator_t creator_t;
 
 template<class T>
 struct default_creator {
-	constexpr unique_ptr<nbt_base> operator()() const {
+	unique_ptr<nbt_base> operator()() const {
 		return make_unique<T>();
 	}
 };
