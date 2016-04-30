@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_base.hpp"
+#include "cpp-nbt/tags/nbt_base.hpp"
 #include <istream>
 #include <ostream>
 

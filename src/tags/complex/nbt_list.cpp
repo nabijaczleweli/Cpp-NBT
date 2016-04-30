@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_list.hpp"
-#include "../../nbt_registry.hpp"
+#include "cpp-nbt/tags/complex/nbt_list.hpp"
+#include "cpp-nbt/nbt_registry.hpp"
 #include <stdexcept>
 #include <algorithm>
 #include <iterator>

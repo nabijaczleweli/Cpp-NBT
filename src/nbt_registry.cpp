@@ -20,19 +20,19 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_registry.hpp"
-#include "tags/nbt_end.hpp"
-#include "tags/primitive/nbt_byte.hpp"
-#include "tags/primitive/nbt_short.hpp"
-#include "tags/primitive/nbt_int.hpp"
-#include "tags/primitive/nbt_long.hpp"
-#include "tags/primitive/nbt_float.hpp"
-#include "tags/primitive/nbt_double.hpp"
-#include "tags/array/nbt_byte_array.hpp"
-#include "tags/nbt_string.hpp"
-#include "tags/complex/nbt_list.hpp"
-#include "tags/complex/nbt_compound.hpp"
-#include "tags/array/nbt_int_array.hpp"
+#include "cpp-nbt/nbt_registry.hpp"
+#include "cpp-nbt/tags/nbt_end.hpp"
+#include "cpp-nbt/tags/primitive/nbt_byte.hpp"
+#include "cpp-nbt/tags/primitive/nbt_short.hpp"
+#include "cpp-nbt/tags/primitive/nbt_int.hpp"
+#include "cpp-nbt/tags/primitive/nbt_long.hpp"
+#include "cpp-nbt/tags/primitive/nbt_float.hpp"
+#include "cpp-nbt/tags/primitive/nbt_double.hpp"
+#include "cpp-nbt/tags/array/nbt_byte_array.hpp"
+#include "cpp-nbt/tags/nbt_string.hpp"
+#include "cpp-nbt/tags/complex/nbt_list.hpp"
+#include "cpp-nbt/tags/complex/nbt_compound.hpp"
+#include "cpp-nbt/tags/array/nbt_int_array.hpp"
 
 
 using namespace std;

@@ -40,7 +40,7 @@ stlib : $(BUILD)/libcpp-nbt$(ARCH)
 
 
 $(BUILD)/$(PREDLL)cpp-nbt$(DLL) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
-	$(CXX) $(CPPAR) -shared -fpic -o$@ $^
+	$(CXX) $(CPPAR) -shared $(PIC) -o$@ $^
 
 $(BUILD)/libcpp-nbt$(ARCH) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
 	ar crs $@ $^
@@ -48,4 +48,4 @@ $(BUILD)/libcpp-nbt$(ARCH) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
 
 $(BUILD)/obj/%$(OBJ) : src/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CPPAR) -c -o$@ $^
+	$(CXX) $(CPPAR) $(PIC) -Iinclude -c -o$@ $^

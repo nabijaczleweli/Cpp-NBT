@@ -20,9 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include "nbt_manager.hpp"
-#include "nbt_registry.hpp"
-#include "tags/complex/nbt_compound.hpp"
+#include "cpp-nbt/nbt_manager.hpp"
+#include "cpp-nbt/nbt_registry.hpp"
+#include "cpp-nbt/tags/complex/nbt_compound.hpp"
 #include <istream>
 
 

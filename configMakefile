@@ -22,8 +22,10 @@
 ifeq "$(OS)" "Windows_NT"
 	DLL = .dll
 	PREDLL =
+	PIC =
 else
 	PREDLL = lib
+	PIC = -fPIC
 	ifeq "$(OS)" "Darwin"
 		DLL = .dylib
 	else
@@ -38,4 +40,4 @@ endif
 OBJ = .o
 ARCH = .a
 AR = ar
-CPPAR = -pedantic -s -Os -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe
+CPPAR = -pedantic -O3 -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe

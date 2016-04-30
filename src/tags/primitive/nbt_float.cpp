@@ -21,7 +21,7 @@
 
 
 #include "primitive_nbt_def.hpp"
-#include "nbt_float.hpp"
+#include "cpp-nbt/tags/primitive/nbt_float.hpp"
 #include <istream>
 #include <ostream>
 

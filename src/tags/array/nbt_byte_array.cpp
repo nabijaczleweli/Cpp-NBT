@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+#include "cpp-nbt/tags/array/nbt_byte_array.hpp"
 #include "array_nbt_def.hpp"
-#include "nbt_byte_array.hpp"
 #include <istream>
 #include <ostream>
 
