@@ -30,7 +30,7 @@
 
 
 namespace cpp_nbt {
-	NBT_CPP_NBT_PRIMITIVE_DECLARATION(byte, char);
+	NBT_CPP_NBT_PRIMITIVE_DECLARATION(byte, char)
 }
 
 

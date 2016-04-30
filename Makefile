@@ -28,17 +28,24 @@ SEGREGATED_TAGS = $(foreach tagt,PRIMITIVE_TAGS ARRAY_TAGS COMPLEX_TAGS,$(foreac
 TAGS = nbt_base nbt_end nbt_string $(SEGREGATED_TAGS)
 SOURCES = nbt_registry nbt_manager $(foreach tag,$(TAGS),tags/$(tag))
 
-.PHONY : clean all dll
+.PHONY : clean all dll stlib
 
-all : dll
+all : dll stlib
 
 clean :
 	rm -rf $(BUILD)
 
-dll : $(foreach src,$(SOURCES),$(BUILD)/$(src)$(OBJ))
-	$(CPP) $(CPPAR) -shared -fpic -o$(BUILD)/cpp-nbt$(DLL) $^
+dll : $(BUILD)/$(PREDLL)cpp-nbt$(DLL)
+stlib : $(BUILD)/libcpp-nbt$(ARCH)
 
 
-$(BUILD)/%$(OBJ) : src/%.cpp
-	@mkdir -p $(dir $@) 1>$(nul) 2>$(nul)
-	$(CPP) $(CPPAR) -c -o$@ $^
+$(BUILD)/$(PREDLL)cpp-nbt$(DLL) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
+	$(CXX) $(CPPAR) -shared -fpic -o$@ $^
+
+$(BUILD)/libcpp-nbt$(ARCH) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
+	ar crs $@ $^
+
+
+$(BUILD)/obj/%$(OBJ) : src/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CPPAR) -c -o$@ $^

@@ -20,23 +20,22 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ifeq "$(OS)" "Windows_NT"
-	EXE = .exe
-	nul = nul
 	DLL = .dll
+	PREDLL =
 else
-	EXE = .out
-	nul = /dev/null
+	PREDLL = lib
 	ifeq "$(OS)" "Darwin"
 		DLL = .dylib
 	else
 		DLL = .so
 	endif
 endif
-nop = echo > $(nul)
+
+ifeq "$(BUILD)" ""
+	BUILD = out
+endif
 
 OBJ = .o
 ARCH = .a
 AR = ar
-CPP = c++
-CPPAR = -s -Os -std=c++14 -Wall -Wextra -pipe -fomit-frame-pointer
-BUILD = out
+CPPAR = -pedantic -s -Os -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe

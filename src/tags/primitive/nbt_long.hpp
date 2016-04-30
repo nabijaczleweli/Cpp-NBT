@@ -30,7 +30,7 @@
 
 
 namespace cpp_nbt {
-	NBT_CPP_NBT_PRIMITIVE_DECLARATION(long, long int);
+	NBT_CPP_NBT_PRIMITIVE_DECLARATION(long, long int)
 }
 
 

@@ -31,7 +31,7 @@
 
 
 namespace cpp_nbt {
-	NBT_CPP_NBT_ARRAY_DECLARATION(int, int);
+	NBT_CPP_NBT_ARRAY_DECLARATION(int, int)
 }
 
 
