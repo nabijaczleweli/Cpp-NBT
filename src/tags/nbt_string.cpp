@@ -62,23 +62,18 @@ bool nbt_string::operator==(const nbt_string & to) {
 }
 
 void nbt_string::read(istream & from) {
-	short int * length = new short int;
-	from.read(static_cast<char *>(static_cast<void *>(length)), sizeof(*length));
-	char * str = new char[*length];
-	from.read(str, *length);
-	payload = string(str, *length);
+	short int length;
+	from.read(static_cast<char *>(static_cast<void *>(&length)), sizeof(length));
 
-	delete length; length = nullptr;
-	delete[] str; str = nullptr;
+	payload.resize(length);
+	from.read(&payload[0], length);
 }
 
 void nbt_string::write(ostream & to) const {
-	short int * length = new short int(payload.size());
-	to.write(static_cast<char *>(static_cast<void *>(length)), sizeof(*length));
+	const short int length = payload.size();
+	to.write(static_cast<const char *>(static_cast<const void *>(&length)), sizeof(length));
 
-	to.write(payload.c_str(), *length);
-
-	delete length; length = nullptr;
+	to.write(payload.c_str(), length);
 }
 
 unique_ptr<nbt_base> nbt_string::clone() const {

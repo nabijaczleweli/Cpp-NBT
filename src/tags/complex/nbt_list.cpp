@@ -110,32 +110,28 @@ bool nbt_list::operator==(const nbt_list & to) {
 void nbt_list::read(istream & from) {
 	from.read(static_cast<char *>(static_cast<void *>(&tag_type)), 1);
 
-	unsigned int * length = new unsigned int;
-	from.read(static_cast<char *>(static_cast<void *>(length)), sizeof(*length));
+	unsigned int length;
+	from.read(static_cast<char *>(static_cast<void *>(&length)), sizeof(length));
 
 	const auto creatorr = nbt_registry::creator(tag_type);
 	if(creatorr) {
 		const auto & creator(*creatorr);
-		tags.resize(*length, nullptr);
+		tags.resize(length, nullptr);
 		for(auto & ptr : tags) {
 			ptr = creator();
 			ptr->read(from);
 		}
 	}
-
-	delete length; length = nullptr;
 }
 
 void nbt_list::write(ostream & to) const {
 	to.write(static_cast<const char *>(static_cast<const void *>(&tag_type)), 1);
 
-	const unsigned int * length = new unsigned int(tags.size());
-	to.write(static_cast<const char *>(static_cast<const void *>(length)), sizeof(*length));
+	const unsigned int length = tags.size();
+	to.write(static_cast<const char *>(static_cast<const void *>(&length)), sizeof(length));
 
 	for(auto ptr : tags)
 		ptr->write(to);
-
-	delete length; length = nullptr;
 }
 
 unsigned char nbt_list::id() const {
