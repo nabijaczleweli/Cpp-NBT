@@ -21,10 +21,9 @@
 
 include configMakefile
 
-PRIMITIVE_TAGS = nbt_byte nbt_short nbt_int nbt_long nbt_float nbt_double
 ARRAY_TAGS = nbt_byte_array nbt_int_array
 COMPLEX_TAGS = nbt_list nbt_compound
-SEGREGATED_TAGS = $(foreach tagt,PRIMITIVE_TAGS ARRAY_TAGS COMPLEX_TAGS,$(foreach tag,$($(tagt)),$(shell echo $(subst _TAGS,,$(tagt)) | tr A-Z a-z)/$(tag)))
+SEGREGATED_TAGS = $(foreach tagt,ARRAY_TAGS COMPLEX_TAGS,$(foreach tag,$($(tagt)),$(shell echo $(subst _TAGS,,$(tagt)) | tr A-Z a-z)/$(tag)))
 TAGS = nbt_base nbt_end nbt_string $(SEGREGATED_TAGS)
 SOURCES = nbt_registry nbt_manager $(foreach tag,$(TAGS),tags/$(tag))
 
