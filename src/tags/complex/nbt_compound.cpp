@@ -24,10 +24,9 @@
 #include "cpp-nbt/nbt_registry.hpp"
 #include "cpp-nbt/nbt_manager.hpp"
 #include "cpp-nbt/tags/nbt_end.hpp"
-#include "cpp-nbt/tags/nbt_primitive.hpp"
-#include "cpp-nbt/tags/array/nbt_byte_array.hpp"
-#include "cpp-nbt/tags/array/nbt_int_array.hpp"
+#include "cpp-nbt/tags/nbt_array.hpp"
 #include "cpp-nbt/tags/nbt_string.hpp"
+#include "cpp-nbt/tags/nbt_primitive.hpp"
 #include "cpp-nbt/tags/complex/nbt_list.hpp"
 #include <algorithm>
 #include <istream>

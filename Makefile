@@ -19,13 +19,13 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
 include configMakefile
 
-ARRAY_TAGS = nbt_byte_array nbt_int_array
-COMPLEX_TAGS = nbt_list nbt_compound
-SEGREGATED_TAGS = $(foreach tagt,ARRAY_TAGS COMPLEX_TAGS,$(foreach tag,$($(tagt)),$(shell echo $(subst _TAGS,,$(tagt)) | tr A-Z a-z)/$(tag)))
-TAGS = nbt_base nbt_end nbt_string $(SEGREGATED_TAGS)
-SOURCES = nbt_registry nbt_manager $(foreach tag,$(TAGS),tags/$(tag))
+
+SOURCES = $(sort $(wildcard src/*.cpp) $(wildcard src/**/*.cpp) $(wildcard src/**/**/*.cpp) $(wildcard src/**/**/**/*.cpp))
+OBJECTS = $(patsubst src/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES))
+
 
 .PHONY : clean all dll stlib
 
@@ -38,10 +38,10 @@ dll : $(BUILD)/$(PREDLL)cpp-nbt$(DLL)
 stlib : $(BUILD)/libcpp-nbt$(ARCH)
 
 
-$(BUILD)/$(PREDLL)cpp-nbt$(DLL) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
+$(BUILD)/$(PREDLL)cpp-nbt$(DLL) : $(OBJECTS)
 	$(CXX) $(CPPAR) -shared $(PIC) -o$@ $^
 
-$(BUILD)/libcpp-nbt$(ARCH) : $(foreach src,$(SOURCES),$(BUILD)/obj/$(src)$(OBJ))
+$(BUILD)/libcpp-nbt$(ARCH) : $(OBJECTS)
 	ar crs $@ $^
 
 

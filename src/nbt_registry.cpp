@@ -22,12 +22,11 @@
 
 #include "cpp-nbt/nbt_registry.hpp"
 #include "cpp-nbt/tags/nbt_end.hpp"
-#include "cpp-nbt/tags/nbt_primitive.hpp"
-#include "cpp-nbt/tags/array/nbt_byte_array.hpp"
+#include "cpp-nbt/tags/nbt_array.hpp"
 #include "cpp-nbt/tags/nbt_string.hpp"
+#include "cpp-nbt/tags/nbt_primitive.hpp"
 #include "cpp-nbt/tags/complex/nbt_list.hpp"
 #include "cpp-nbt/tags/complex/nbt_compound.hpp"
-#include "cpp-nbt/tags/array/nbt_int_array.hpp"
 #include <memory>
 
 
@@ -55,11 +54,11 @@ unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
 	{nbt_long::nbt_tag_id, default_creator<nbt_long>()},
 	{nbt_float::nbt_tag_id, default_creator<nbt_float>()},
 	{nbt_double::nbt_tag_id, default_creator<nbt_double>()},
-	{nbt_byte_array::nbt_byte_array_id, default_creator<nbt_byte_array>()},
+	{nbt_byte_array::nbt_tag_id, default_creator<nbt_byte_array>()},
 	{nbt_string::nbt_string_id, default_creator<nbt_string>()},
 	{nbt_list::nbt_list_id, default_creator<nbt_list>()},
 	{nbt_compound::nbt_compound_id, default_creator<nbt_compound>()},
-	{nbt_int_array::nbt_int_array_id, default_creator<nbt_int_array>()}
+	{nbt_int_array::nbt_tag_id, default_creator<nbt_int_array>()}
 });
 
 
