@@ -29,12 +29,6 @@ using namespace cpp_nbt;
 using namespace std;
 
 
-nbt_base::nbt_base() {}
-nbt_base::nbt_base(const nbt_base &) {}
-nbt_base::nbt_base(nbt_base &&) {}
-
-nbt_base::~nbt_base() {}
-
 nbt_base & nbt_base::operator=(const nbt_base & from) {
 	unique_ptr<nbt_base> temp = from.clone();
 	swap(*temp);

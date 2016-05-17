@@ -41,12 +41,12 @@ namespace cpp_nbt {
 		public:
 			static const unsigned char nbt_tag_id;
 
-			nbt_list();
+			nbt_list() = default;
 			explicit nbt_list(const std::vector<std::shared_ptr<nbt_base>> & thetags);
-			nbt_list(const nbt_list & other);
-			nbt_list(nbt_list && other);
+			nbt_list(const nbt_list & other) = default;
+			nbt_list(nbt_list && other) = default;
 
-			virtual ~nbt_list();
+			virtual ~nbt_list() = default;
 
 			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_list & with);

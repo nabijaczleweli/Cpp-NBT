@@ -40,16 +40,11 @@ using namespace cpp_nbt;
 const unsigned char nbt_compound::nbt_tag_id = 10;
 
 
-nbt_compound::nbt_compound() : nbt_base() {}
 nbt_compound::nbt_compound(const unordered_map<string, shared_ptr<nbt_base>> & thetags) : nbt_base() {
 	transform(thetags.begin(), thetags.end(), inserter(tags, tags.begin()), [&](const pair<string, shared_ptr<nbt_base>> & pr) {
 		return make_pair(pr.first, shared_ptr<nbt_base>(pr.second ? pr.second->clone() : nullptr));
 	});
 }
-nbt_compound::nbt_compound(const nbt_compound & other) : nbt_compound(other.tags) {}
-nbt_compound::nbt_compound(nbt_compound && other) : nbt_base(move(other)), tags(move(other.tags)) {}
-
-nbt_compound::~nbt_compound() {}
 
 void nbt_compound::swap(nbt_base & with) {
 	swap(dynamic_cast<nbt_compound &>(with));

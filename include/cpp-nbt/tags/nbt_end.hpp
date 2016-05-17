@@ -34,11 +34,11 @@ namespace cpp_nbt {
 			static const unsigned char nbt_tag_id;
 
 
-			nbt_end();
-			nbt_end(const nbt_end & other);
-			nbt_end(nbt_end && other);
+			nbt_end() = default;
+			nbt_end(const nbt_end & other) = default;
+			nbt_end(nbt_end && other) = default;
 
-			virtual ~nbt_end();
+			virtual ~nbt_end() = default;
 
 			virtual void swap(nbt_base & with) override;
 

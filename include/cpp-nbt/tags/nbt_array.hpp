@@ -42,10 +42,10 @@ namespace cpp_nbt {
 			static const unsigned char nbt_tag_id;
 
 
-			nbt_array();
-			explicit nbt_array(const std::vector<ContainedType> & value);
-			nbt_array(const nbt_array & other);
-			nbt_array(nbt_array && other);
+			nbt_array() = default;
+			explicit nbt_array(std::vector<ContainedType> value);
+			nbt_array(const nbt_array & other) = default;
+			nbt_array(nbt_array && other) = default;
 
 			virtual ~nbt_array() = default;
 
@@ -77,16 +77,7 @@ const unsigned char cpp_nbt::nbt_array<ContainedType, NbtId>::nbt_tag_id = NbtId
 
 
 template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_array<ContainedType, NbtId>::nbt_array() : nbt_base() {}
-
-template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_array<ContainedType, NbtId>::nbt_array(const std::vector<ContainedType> & value) : nbt_base(), payload(value) {}
-
-template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_array<ContainedType, NbtId>::nbt_array(const cpp_nbt::nbt_array<ContainedType, NbtId> & other) : nbt_base(other), payload(other.payload) {}
-
-template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_array<ContainedType, NbtId>::nbt_array(cpp_nbt::nbt_array<ContainedType, NbtId> && other) : nbt_base(std::move(other)), payload(std::move(other.payload)) {}
+cpp_nbt::nbt_array<ContainedType, NbtId>::nbt_array(std::vector<ContainedType> value) : nbt_base(), payload(std::move(value)) {}
 
 template<class ContainedType, unsigned char NbtId>
 void cpp_nbt::nbt_array<ContainedType, NbtId>::swap(cpp_nbt::nbt_base & with) {

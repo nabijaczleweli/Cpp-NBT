@@ -40,12 +40,12 @@ namespace cpp_nbt {
 		public:
 			static const unsigned char nbt_tag_id;
 
-			nbt_compound();
+			nbt_compound() = default;
 			explicit nbt_compound(const std::unordered_map<std::string, std::shared_ptr<nbt_base>> & thetags);
-			nbt_compound(const nbt_compound & other);
-			nbt_compound(nbt_compound && other);
+			nbt_compound(const nbt_compound & other) = default;
+			nbt_compound(nbt_compound && other) = default;
 
-			virtual ~nbt_compound();
+			virtual ~nbt_compound() = default;
 
 			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_compound & with);

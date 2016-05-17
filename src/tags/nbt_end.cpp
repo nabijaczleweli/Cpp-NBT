@@ -31,12 +31,6 @@ using namespace cpp_nbt;
 const unsigned char nbt_end::nbt_tag_id = 0;
 
 
-nbt_end::nbt_end() : nbt_base() {}
-nbt_end::nbt_end(const nbt_end & other) : nbt_base(other) {}
-nbt_end::nbt_end(nbt_end && other) : nbt_base(move(other)) {}
-
-nbt_end::~nbt_end() {}
-
 void nbt_end::swap(nbt_base &) {}
 
 void nbt_end::read(std::istream &) {}

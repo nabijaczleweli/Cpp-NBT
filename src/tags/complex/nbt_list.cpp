@@ -45,7 +45,6 @@ bool nbt_list::try_tag_type(const nbt_base & tag) {
 	return true;
 }
 
-nbt_list::nbt_list() : nbt_base(), tag_type(0) {}
 nbt_list::nbt_list(const vector<shared_ptr<nbt_base>> & thetags) : nbt_base(), tag_type(0) {
 	transform(thetags.begin(), thetags.end(), back_inserter(tags), [&](const shared_ptr<nbt_base> & ptr) {
 		return shared_ptr<nbt_base>(ptr ? ptr->clone() : nullptr);
@@ -73,10 +72,6 @@ nbt_list::nbt_list(const vector<shared_ptr<nbt_base>> & thetags) : nbt_base(), t
 			tag_type = tags[0]->id();
 	}
 }
-nbt_list::nbt_list(const nbt_list & other) : nbt_list(other.tags) {}
-nbt_list::nbt_list(nbt_list && other) : nbt_base(move(other)), tag_type(other.tag_type), tags(move(other.tags)) {}
-
-nbt_list::~nbt_list() {}
 
 void nbt_list::swap(nbt_base & with) {
 	swap(dynamic_cast<nbt_list &>(with));

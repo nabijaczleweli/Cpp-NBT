@@ -32,12 +32,7 @@ using namespace cpp_nbt;
 const unsigned char nbt_string::nbt_tag_id = 8;
 
 
-nbt_string::nbt_string() : nbt_base() {}
 nbt_string::nbt_string(const string & str) : nbt_base(), payload(str) {}
-nbt_string::nbt_string(const nbt_string & other) : nbt_base(other), payload(other.payload) {}
-nbt_string::nbt_string(nbt_string && other) : nbt_base(move(other)), payload(move(other.payload)) {}
-
-nbt_string::~nbt_string() {}
 
 void nbt_string::swap(nbt_base & with) {
 	swap(dynamic_cast<nbt_string &>(with));

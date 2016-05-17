@@ -32,11 +32,7 @@
 namespace cpp_nbt {
 	class nbt_base {
 		public:
-			nbt_base();
-			nbt_base(const nbt_base & other);
-			nbt_base(nbt_base && other);
-
-			virtual ~nbt_base();
+			virtual ~nbt_base() = default;
 
 			virtual void swap(nbt_base & with) = 0;
 

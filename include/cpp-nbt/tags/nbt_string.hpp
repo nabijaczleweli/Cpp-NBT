@@ -38,12 +38,12 @@ namespace cpp_nbt {
 		public:
 			static const unsigned char nbt_tag_id;
 
-			nbt_string();
+			nbt_string() = default;
 			explicit nbt_string(const std::string & str);
-			nbt_string(const nbt_string & other);
-			nbt_string(nbt_string && other);
+			nbt_string(const nbt_string & other) = default;
+			nbt_string(nbt_string && other) = default;
 
-			virtual ~nbt_string();
+			virtual ~nbt_string() = default;
 
 			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_string & with);

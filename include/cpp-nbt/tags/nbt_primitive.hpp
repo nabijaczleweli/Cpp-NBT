@@ -41,10 +41,10 @@ namespace cpp_nbt {
 			static const unsigned char nbt_tag_id;
 
 
-			nbt_number();
+			nbt_number() = default;
 			nbt_number(ContainedType value);
-			nbt_number(const nbt_number & other);
-			nbt_number(nbt_number && other);
+			nbt_number(const nbt_number & other) = default;
+			nbt_number(nbt_number && other) = default;
 
 			virtual ~nbt_number() = default;
 
@@ -78,17 +78,9 @@ namespace cpp_nbt {
 template<class ContainedType, unsigned char NbtId>
 const unsigned char cpp_nbt::nbt_number<ContainedType, NbtId>::nbt_tag_id = NbtId;
 
-template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_number<ContainedType, NbtId>::nbt_number() : cpp_nbt::nbt_base(), payload(0) {}
 
 template<class ContainedType, unsigned char NbtId>
 cpp_nbt::nbt_number<ContainedType, NbtId>::nbt_number(ContainedType value) : cpp_nbt::nbt_base(), payload(value) {}
-
-template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_number<ContainedType, NbtId>::nbt_number(const cpp_nbt::nbt_number<ContainedType, NbtId> & other) : cpp_nbt::nbt_base(other), payload(other.payload) {}
-
-template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_number<ContainedType, NbtId>::nbt_number(cpp_nbt::nbt_number<ContainedType, NbtId> && other) : cpp_nbt::nbt_base(std::move(other)), payload(other.payload) {}
 
 template<class ContainedType, unsigned char NbtId>
 void cpp_nbt::nbt_number<ContainedType, NbtId>::swap(cpp_nbt::nbt_base & with) {
