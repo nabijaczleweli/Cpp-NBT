@@ -28,7 +28,7 @@ using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_end::nbt_end_id = 0;
+const unsigned char nbt_end::nbt_tag_id = 0;
 
 
 nbt_end::nbt_end() : nbt_base() {}
@@ -43,7 +43,7 @@ void nbt_end::read(std::istream &) {}
 void nbt_end::write(std::ostream &) const {}
 
 unsigned char nbt_end::id() const {
-	return nbt_end_id;
+	return nbt_tag_id;
 }
 
 unique_ptr<nbt_base> nbt_end::clone() const {

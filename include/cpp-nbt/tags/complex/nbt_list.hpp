@@ -39,7 +39,7 @@ namespace cpp_nbt {
 			bool try_tag_type(const nbt_base & tag);
 
 		public:
-			static const unsigned char nbt_list_id;
+			static const unsigned char nbt_tag_id;
 
 			nbt_list();
 			explicit nbt_list(const std::vector<std::shared_ptr<nbt_base>> & thetags);

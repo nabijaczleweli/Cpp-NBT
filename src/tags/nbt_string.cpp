@@ -29,7 +29,7 @@ using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_string::nbt_string_id = 8;
+const unsigned char nbt_string::nbt_tag_id = 8;
 
 
 nbt_string::nbt_string() : nbt_base() {}
@@ -86,7 +86,7 @@ unique_ptr<nbt_base> nbt_string::clone() const {
 }
 
 unsigned char nbt_string::id() const {
-	return nbt_string_id;
+	return nbt_tag_id;
 }
 
 const string & nbt_string::value() const {

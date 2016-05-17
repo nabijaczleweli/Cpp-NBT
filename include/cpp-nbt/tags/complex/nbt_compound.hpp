@@ -38,7 +38,7 @@ namespace cpp_nbt {
 			std::unordered_map<std::string, std::shared_ptr<nbt_base>> tags;
 
 		public:
-			static const unsigned char nbt_compound_id;
+			static const unsigned char nbt_tag_id;
 
 			nbt_compound();
 			explicit nbt_compound(const std::unordered_map<std::string, std::shared_ptr<nbt_base>> & thetags);

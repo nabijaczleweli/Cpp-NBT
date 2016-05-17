@@ -47,7 +47,7 @@ struct default_creator {
 
 
 unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
-	{nbt_end::nbt_end_id, default_creator<nbt_end>()},
+	{nbt_end::nbt_tag_id, default_creator<nbt_end>()},
 	{nbt_byte::nbt_tag_id, default_creator<nbt_byte>()},
 	{nbt_short::nbt_tag_id, default_creator<nbt_short>()},
 	{nbt_int::nbt_tag_id, default_creator<nbt_int>()},
@@ -55,9 +55,9 @@ unordered_map<unsigned char, creator_t> nbt_registry::id_to_pointer_map({
 	{nbt_float::nbt_tag_id, default_creator<nbt_float>()},
 	{nbt_double::nbt_tag_id, default_creator<nbt_double>()},
 	{nbt_byte_array::nbt_tag_id, default_creator<nbt_byte_array>()},
-	{nbt_string::nbt_string_id, default_creator<nbt_string>()},
-	{nbt_list::nbt_list_id, default_creator<nbt_list>()},
-	{nbt_compound::nbt_compound_id, default_creator<nbt_compound>()},
+	{nbt_string::nbt_tag_id, default_creator<nbt_string>()},
+	{nbt_list::nbt_tag_id, default_creator<nbt_list>()},
+	{nbt_compound::nbt_tag_id, default_creator<nbt_compound>()},
 	{nbt_int_array::nbt_tag_id, default_creator<nbt_int_array>()}
 });
 

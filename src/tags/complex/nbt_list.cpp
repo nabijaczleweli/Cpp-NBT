@@ -34,7 +34,7 @@ using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_list::nbt_list_id = 9;
+const unsigned char nbt_list::nbt_tag_id = 9;
 
 
 bool nbt_list::try_tag_type(const nbt_base & tag) {
@@ -139,7 +139,7 @@ void nbt_list::write(ostream & to) const {
 }
 
 unsigned char nbt_list::id() const {
-	return nbt_list_id;
+	return nbt_tag_id;
 }
 
 unique_ptr<nbt_base> nbt_list::clone() const {

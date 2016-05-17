@@ -31,7 +31,7 @@
 namespace cpp_nbt {
 	class nbt_end : public nbt_base {
 		public:
-			static const unsigned char nbt_end_id;
+			static const unsigned char nbt_tag_id;
 
 
 			nbt_end();

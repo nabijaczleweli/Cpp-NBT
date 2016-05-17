@@ -36,7 +36,7 @@ namespace cpp_nbt {
 			std::string payload;
 
 		public:
-			static const unsigned char nbt_string_id;
+			static const unsigned char nbt_tag_id;
 
 			nbt_string();
 			explicit nbt_string(const std::string & str);

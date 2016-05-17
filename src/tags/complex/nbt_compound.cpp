@@ -37,7 +37,7 @@ using namespace std;
 using namespace cpp_nbt;
 
 
-const unsigned char nbt_compound::nbt_compound_id = 10;
+const unsigned char nbt_compound::nbt_tag_id = 10;
 
 
 nbt_compound::nbt_compound() : nbt_base() {}
@@ -84,7 +84,7 @@ bool nbt_compound::operator==(const nbt_compound & to) {
 void nbt_compound::read(istream & from) {
 	nbt_string name;
 	unsigned char id;
-	while((id = nbt_manager::read_id(from)) != nbt_end::nbt_end_id) {  // Read id
+	while((id = nbt_manager::read_id(from)) != nbt_end::nbt_tag_id) {  // Read id
 		name.read(from);  // Read name
 		unique_ptr<nbt_base> tag = nbt_registry::create(id);
 		if(!tag)
@@ -109,14 +109,14 @@ void nbt_compound::write(ostream & to) const {
 		}
 
 	// End with an nbt_end
-	nbt_manager::write_id(to, nbt_end::nbt_end_id);
+	nbt_manager::write_id(to, nbt_end::nbt_tag_id);
 	name.value().clear();
 	name.write(to);
 	nbt_end().write(to);
 }
 
 unsigned char nbt_compound::id() const {
-	return nbt_compound_id;
+	return nbt_tag_id;
 }
 
 unique_ptr<nbt_base> nbt_compound::clone() const {
