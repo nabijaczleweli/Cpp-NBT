@@ -59,9 +59,8 @@ void nbt_compound::swap(nbt_compound & with) {
 	tags.swap(with.tags);
 }
 
-nbt_compound & nbt_compound::operator=(const nbt_compound & from) {
-	nbt_compound temp(from);
-	swap(temp);
+nbt_compound & nbt_compound::operator=(nbt_compound from) {
+	swap(from);
 	return *this;
 }
 

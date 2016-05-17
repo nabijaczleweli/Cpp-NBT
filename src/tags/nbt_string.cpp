@@ -47,9 +47,8 @@ void nbt_string::swap(nbt_string & with) {
 	payload.swap(with.payload);
 }
 
-nbt_string & nbt_string::operator=(const nbt_string & from) {
-	nbt_string temp(from);
-	swap(temp);
+nbt_string & nbt_string::operator=(nbt_string from) {
+	swap(from);
 	return *this;
 }
 

@@ -52,7 +52,7 @@ namespace cpp_nbt {
 			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_array & with);
 
-			nbt_array & operator=(const nbt_array & from);
+			nbt_array & operator=(nbt_array from);
 			virtual bool operator==(const nbt_base & to) override;
 			virtual bool operator==(const nbt_array & to);
 
@@ -99,9 +99,8 @@ void cpp_nbt::nbt_array<ContainedType, NbtId>::swap(cpp_nbt::nbt_array<Contained
 }
 
 template<class ContainedType, unsigned char NbtId>
-cpp_nbt::nbt_array<ContainedType, NbtId> & cpp_nbt::nbt_array<ContainedType, NbtId>::operator=(const cpp_nbt::nbt_array<ContainedType, NbtId> & from) {
-	cpp_nbt::nbt_array<ContainedType, NbtId> temp(from);
-	swap(temp);
+cpp_nbt::nbt_array<ContainedType, NbtId> & cpp_nbt::nbt_array<ContainedType, NbtId>::operator=(cpp_nbt::nbt_array<ContainedType, NbtId> from) {
+	swap(from);
 	return *this;
 }
 

@@ -50,7 +50,7 @@ namespace cpp_nbt {
 			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_compound & with);
 
-			nbt_compound & operator=(const nbt_compound & from);
+			nbt_compound & operator=(nbt_compound from);
 			virtual bool operator==(const nbt_base & to) override;
 			virtual bool operator==(const nbt_compound & to);
 

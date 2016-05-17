@@ -87,9 +87,8 @@ void nbt_list::swap(nbt_list & with) {
 	tags.swap(with.tags);
 }
 
-nbt_list & nbt_list::operator=(const nbt_list & from) {
-	nbt_list temp(from);
-	swap(temp);
+nbt_list & nbt_list::operator=(nbt_list from) {
+	swap(from);
 	return *this;
 }
 

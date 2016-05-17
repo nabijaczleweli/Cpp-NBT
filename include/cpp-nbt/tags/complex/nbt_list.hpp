@@ -51,7 +51,7 @@ namespace cpp_nbt {
 			virtual void swap(nbt_base & with) override;
 			virtual void swap(nbt_list & with);
 
-			nbt_list & operator=(const nbt_list & from);
+			nbt_list & operator=(nbt_list from);
 			virtual bool operator==(const nbt_base & to) override;
 			virtual bool operator==(const nbt_list & to);
 
